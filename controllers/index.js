@@ -3,18 +3,17 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/',function(req,res){
-    res.sendFile('home.html',{'root': __dirname + '/../templates'});
-});
 
-router.get('/showSignInPage',function(req,res){
-    res.sendFile('signin.html',{'root': __dirname + '/../templates'});
-})
+router.use('/api', require('./authenticate'));
+router.use('/api', require('./users'));
 
-router.get('/showSignUpPage',function(req,res){
-  res.sendFile('signup.html',{'root':__dirname + '/../templates'})
-})
+router.use('/', express.static(__dirname + '/../public'));
+//router.use('/styles', express.static(__dirname + '/../public/styles'));
+//router.use('/', express.static(__dirname + '/../public'));
 
-router.use('/api', require('./users'))
+// router.all('/', function(req, res, next) {
+//     // Just send the index.html for other files to support HTML5Mode
+//     res.sendFile('index.html', {'root': __dirname + '/../public'});
+// });
 
 module.exports = router;

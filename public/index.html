@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" ng-app="beerShelfApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beer Shelf</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/beer-shelf.css" />
+    <link rel="stylesheet" href="styles/signin.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="core/core.module.js"></script>
+    <script src="core/user/user.module.js"></script>
+    <script src="core/user/user.service.js"></script>
+    <script src="core/auth/auth.module.js"></script>
+    <script src="core/auth/auth.service.js"></script>
+    <script src="login/login.module.js"></script>
+    <script src="login/login.component.js"></script>
+    <script src="user-list/user-list.module.js"></script>
+    <script src="user-list/user-list.component.js"></script>
+  </head>
+  <body>
+      <div ng-view></div>
+  </body>
+</html>

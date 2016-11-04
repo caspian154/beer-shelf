@@ -1,0 +1,11 @@
+body {
+  padding: 20px;
+}
+
+h1 {
+  border-bottom: 1px solid gray;
+}
+
+.error-text {
+  color: red;
+}
