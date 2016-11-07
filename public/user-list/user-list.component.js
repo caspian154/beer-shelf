@@ -7,7 +7,6 @@ angular.
     controller: ['User',
       function UserListController(User) {
         this.users = User.query();
-        this.count = this.users.length;
         this.orderProp = 'name';
       }
     ]

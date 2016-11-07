@@ -8,8 +8,6 @@
       </p>
     </div>
     <div class="col-md-10">
-      <p>found: {{$ctrl.count}}</p>
-      <p>found: {{$ctrl.users.length}}</p>
       <!--Body content-->
       <ul class="users">
         <li ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp" class="thumbnail">
