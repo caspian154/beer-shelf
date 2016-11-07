@@ -10,7 +10,9 @@ router.route('/users')
   // fetch all users
   .get(function (req, res) {
     Users.forge()
-    .fetch()
+    .fetch({
+      columns: ['id', 'email', 'name']
+    })
     .then(function (collection) {
       console.log('get users');
       //res.json({error: false, data: collection.toJSON()});

@@ -8,10 +8,10 @@ angular.
 
       $routeProvider.
         when('/login', {
-          template: '<login></login>'
+          template: '<main-header></main-header><login></login>'
         }).
         when('/users', {
-          template: '<user-list></user-list>'
+          template: '<main-header></main-header><user-list></user-list>'
         }).
         when('/users/:userId', {
           template: '<user-detail></user-detail>'
