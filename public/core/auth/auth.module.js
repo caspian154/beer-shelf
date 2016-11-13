@@ -1,1 +1,1 @@
-angular.module('core.auth', ['ngResource']);
+angular.module('core.auth', []);

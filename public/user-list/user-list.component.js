@@ -6,13 +6,26 @@ angular.
     templateUrl: 'user-list/user-list.template.html',
     controller: ['User', 'Auth','$window',
       function UserListController(User, Auth, $window) {
+        var self = this;
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
           $window.location.href = '#!/logout';
         }
 
-        this.users = User.query();
-        this.orderProp = 'name';
+        User.get(function(response) {
+          self.users = response
+        })
+        this.orderProp = 'name'
+        this.newUser = {
+          email: 'test@test.com',
+          password: 'test123',
+          name: 'Test User'
+        }
+
+        this.createUser = function() {
+          console.log("Create a new user " + self.newUser.name)
+          User.create(self.newUser)
+        }
       }
     ]
   });

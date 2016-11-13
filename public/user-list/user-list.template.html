@@ -1,21 +1,54 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-2">
-      <!--Sidebar content-->
+    <!-- <div class="col-md-2">
+
+    </div> -->
+    <div class="col-md-10">
       <p>
         Search:
         <input ng-model="$ctrl.query.name">
       </p>
-    </div>
-    <div class="col-md-10">
       <!--Body content-->
-      <ul class="users">
-        <li ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp" class="thumbnail">
-          <p><strong ng-if="user.id == $ctrl.currentUser.id">{{user.name}}</strong></p>
-          <p>{{user.email}}</p>
-          <pre>{{user | json}}</pre>
-        </li>
-      </ul>
+      <div class="users">
+        <table class="table table-striped">
+          <thead class="thead-default">
+            <tr>
+              <th>User Id</th>
+              <th>Name</th>
+              <th>email</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp" ng-class="{'success': (user.id == $ctrl.currentUser.id)}">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <form ng-submit="$ctrl.createUser()">
+        <h2>Create a new user</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" ng-model="$ctrl.newUser.email" class="form-control" placeholder="Email address" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" ng-model="$ctrl.newUser.password" class="form-control" placeholder="Password" required>
+
+        <label for="inputText" class="sr-only">Name</label>
+        <input type="text" ng-model="$ctrl.newUser.name" class="form-control" placeholder="Full Name" required>
+
+        <!--<div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+
+        <br />
+        <div class="error-text">
+        {{$ctrl.error}}
+        </div>
+      </form>
     </div>
   </div>
 </div>
