@@ -4,32 +4,24 @@ angular.
   module('login').
   component('login', {
     templateUrl: 'login/login.template.html',
-    controller: ['Auth', '$http', '$window',
-      function LoginController(Auth, $http, $window) {
+    controller: ['Auth', '$window',
+      function LoginController(Auth, $window) {
         var self = this;
+
+        function loginSuccess(response) {
+          $window.location.href = '#!/users';
+        }
+
+        function loginFailure(response) {
+          self.error = "Invalid credentials";
+        }
+
+        this.login = function () {
+          Auth.login({email: self.email, password: self.password}, loginSuccess, loginFailure);
+        }
 
         self.email = 'srtelle@gmail.com';
         self.password = 'test';
-
-        this.login = function () {
-          Auth.query({email: self.email, password: self.password},
-            function(data) {
-              self.auth = data;
-              if (self.auth) {
-                if (!self.auth.success && self.auth.message) {
-                  self.error = self.auth.message;
-                  return;
-                }
-                else if (self.auth.success && self.auth.token){
-                  $http.defaults.headers.common['X-Access-Token'] = self.auth.token;
-                  $window.location.href = '#!/users';
-                  return;
-                }
-              }
-
-              self.error = "Something serious went wrong.";
-            });
-        }
       }
     ]
   });
