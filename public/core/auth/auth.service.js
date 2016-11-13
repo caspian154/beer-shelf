@@ -31,7 +31,7 @@ angular.
 
       return {
         // signup: function (data, success, error) {
-        //     
+        //
         // },
         login: function (data, success, error) {
             $http.post('/api/authenticate', data).success(function (response) {
@@ -46,7 +46,7 @@ angular.
               }
             }).error(error)
         }
-        , getCurrentuser: function() {
+        , getCurrentUser: function() {
           return getCurrentUserFromToken();
         }
         , logout: function () {

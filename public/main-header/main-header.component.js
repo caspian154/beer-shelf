@@ -6,7 +6,7 @@ angular.
     templateUrl: 'main-header/main-header.template.html',
     controller: ['Auth',
       function MainHeaderController(Auth) {
-        this.user = Auth.getCurrentuser()
+        this.user = Auth.getCurrentUser()
       }
     ]
   });

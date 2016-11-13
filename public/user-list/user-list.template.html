@@ -11,7 +11,7 @@
       <!--Body content-->
       <ul class="users">
         <li ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp" class="thumbnail">
-          <p>{{user.name}}</p>
+          <p><strong ng-if="user.id == $ctrl.currentUser.id">{{user.name}}</strong></p>
           <p>{{user.email}}</p>
           <pre>{{user | json}}</pre>
         </li>
