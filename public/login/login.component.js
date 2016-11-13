@@ -9,7 +9,7 @@ angular.
         var self = this;
 
         function loginSuccess(response) {
-          $window.location.href = '#!/users';
+          $window.location.href = '#!/shelf';
         }
 
         function loginFailure(response) {

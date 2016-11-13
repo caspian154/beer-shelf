@@ -25,6 +25,9 @@ angular.
         .when('/users/:userId', {
           template: '<user-detail></user-detail>'
         })
-        .otherwise('/users');
+        .when('/shelf', {
+          template: '<main-header></main-header><shelf></shelf>'
+        })
+        .otherwise('/shelf');
     }
   ]);

@@ -11,3 +11,4 @@ A Beer shelf app for keeping track of the beers in the basement and reviews of w
 1. `font-awesome` is installed via `npm insall font-awesome -s`, best way to reference that from html?
 2. Is there a better way to store authentication than just putting the token in the header? `shift-f5` blows the token away...
 3. Is there a better way to verify authentication than just checking if a user exists?
+4. The templates for my routes all have `<main-header></main-header>`, is there a way to just add that to `index.html`
