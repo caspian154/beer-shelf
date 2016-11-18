@@ -1,3 +1,5 @@
+'use strict';
+
 let bookshelf = require('../database');
 let User = require('./user');
 
