@@ -10,9 +10,7 @@ var config = require('../config')
 
 router.route('/authenticate')
   .post(function (req, res) {
-    console.log('authenticate request received.');
     if (!req.body.email || !req.body.password) {
-      console.log('Authentication failed - invalid request');
       res.json({ success: false, message: 'Authentication failed - invalid request.' });
       return;
     }
@@ -20,7 +18,6 @@ router.route('/authenticate')
     User.forge({email: req.body.email}).fetch()
     .then(function(user) {
       if (!user) {
-        console.log('Authentication failed, User not found.');
         res.json({ success: false, message: 'Authentication failed. User not found.' });
       } else if (user) {
         // check if password matches
@@ -32,7 +29,6 @@ router.route('/authenticate')
           // if user is found and password is right create a token
           var token = jwt.sign(user, config.secret, { expiresIn: 60 * 60 });
 
-          console.log('Authentication success');
           // return the information including token as JSON
           res.json({
             success: true,

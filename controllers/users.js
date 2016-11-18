@@ -14,7 +14,6 @@ router.route('/users')
       columns: ['id', 'email', 'name']
     })
     .then(function (collection) {
-      console.log('get users');
       //res.json({error: false, data: collection.toJSON()});
       res.json(collection.toJSON());
       //res.json(req.decoded)
@@ -25,7 +24,6 @@ router.route('/users')
   })
   // create a user
   .post(function (req, res) {
-    console.log('create user: '+ req.body.name);
     User.forge({
       name: req.body.name,
       email: req.body.email,

@@ -7,24 +7,35 @@ angular.
     controller: ['User', 'Auth','$window',
       function UserListController(User, Auth, $window) {
         var self = this;
+
+        /** Functions **/
+        // Load the users from the database.
+        this.loadUsers = function() {
+          User.get(function(response) {
+            self.users = response
+          })
+        }
+
+        // Create a new user
+        this.createUser = function() {
+          User.create(self.newUser, function(newUser) {
+            self.users.push(newUser)
+            $('#myModal').modal('hide') 
+          })
+        }
+        /** End of functions **/
+
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
           $window.location.href = '#!/logout';
         }
 
-        User.get(function(response) {
-          self.users = response
-        })
+        this.loadUsers();
         this.orderProp = 'name'
         this.newUser = {
           email: 'test@test.com',
           password: 'test123',
           name: 'Test User'
-        }
-
-        this.createUser = function() {
-          console.log("Create a new user " + self.newUser.name)
-          User.create(self.newUser)
         }
       }
     ]
