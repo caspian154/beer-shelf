@@ -3,18 +3,18 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../models/user')
-var Users = require('../models/users')
+var Brewery = require('../models/brewery')
+var Breweries = require('../models/breweries')
 
-router.route('/users/:user_id')
+router.route('/breweries/:brewery_id')
   .get(function (req, res) {
-    User.where('id', req.params.user_id).fetch()
-    .then (function (user) {
-      if (user) {
-        res.json(user.toJSON())
+    Brewery.where('id', req.params.brewery_id).fetch()
+    .then (function (brewery) {
+      if (brewery) {
+        res.json(brewery.toJSON())
       }
       else {
-        res.status(500).json({error: true, data: {message: 'Unabled to find user'}});
+        res.status(500).json({error: true, data: {message: 'Unabled to find brewery'}});
       }
     })
     .catch(function (err) {
@@ -22,13 +22,11 @@ router.route('/users/:user_id')
     })
   })
 
-router.route('/users')
+router.route('/breweries')
   // fetch all users
   .get(function (req, res) {
-    Users.forge()
-    .fetch({
-      columns: ['id', 'email', 'name']
-    })
+    Breweries.forge()
+    .fetch()
     .then(function (collection) {
       res.json(collection.toJSON());
     })
@@ -36,16 +34,15 @@ router.route('/users')
       res.status(500).json({error: true, data: {message: err.message}});
     })
   })
-  // create a user
+  // create a brewery
   .post(function (req, res) {
-    User.forge({
+    Brewery.forge({
       name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
+      beer_advocate_id: req.body.beer_advocate_id
     })
     .save()
-    .then(function (user) {
-      res.json({error: false, data: {id: user.get('id')}})
+    .then(function (brewery) {
+      res.json({error: false, data: {id: brewery.get('id')}})
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}})
