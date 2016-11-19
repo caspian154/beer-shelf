@@ -5,6 +5,7 @@ var router = express.Router();
 
 var Brewery = require('../models/brewery')
 var Breweries = require('../models/breweries')
+var Parser = require('./external-lookup/BeerAdvocateParser')
 
 router.route('/breweries/:brewery_id')
   .get(function (req, res) {
@@ -47,6 +48,11 @@ router.route('/breweries')
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}})
     })
+  })
+
+router.route('/external-breweries/:text')
+  .get(function (req, res) {
+    res.json(Parser.lookupBreweries(req.params.text))
   })
 
 module.exports = router;
