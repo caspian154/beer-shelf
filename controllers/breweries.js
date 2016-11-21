@@ -52,7 +52,13 @@ router.route('/breweries')
 
 router.route('/external-breweries/:text')
   .get(function (req, res) {
-    res.json(Parser.lookupBreweries(req.params.text))
+    Parser.lookupBreweries(req.params.text,
+      function(breweries) {
+        res.json(breweries)
+      },
+      function(errorMessage) {
+        res.status(500).json({error: true, data: {message: errorMessage}})
+      })
   })
 
 module.exports = router;

@@ -1,41 +1,43 @@
-'use strict';
+'use strict'
 
-var https = require('https');
+var https = require('https')
+var cheerio = require('cheerio')
+var S = require('string')
 
-// Constructor
-function BeerAdvocateParser() {
+/** Parse the page returned from BA **/
+function parseHtml(html, searchText) {
+  var $ = cheerio.load(html)
+  var results = [];
+
+  $('a').each(function(i, elem) {
+    var link = $(elem);
+    if (link.attr('href') && S(link.attr('href')).startsWith('/beer/profile') ) {
+      results.push({url: link.attr('href'), name: link.html()})
+    }
+  });
+
+  return results;
 }
 
-// class methods
-BeerAdvocateParser.prototype.lookupBreweries = function(searchText) {
-
+/** Function to lookup breweries based on a search string **/
+exports.lookupBreweries = function(searchText, callback, errorCallback) {
+  var self = this
   var url ='https://www.beeradvocate.com/search/?q=' + searchText + '&qt=place'
-  console.log('URL IS ' + url)
 
   https.get(url, function(res) {
     let rawData = '';
 
-    /** TODO: pretty up this stuff and process the end response **/
     res.on('data', (chunk) => {
       rawData += chunk
-      console.log('data...')
     });
     res.on('end', () => {
       try {
-        console.log('got to the end...')
-        console.log(rawData);
+        callback(parseHtml(rawData))
       } catch (e) {
-        console.log(e.message);
+        errorCallback(e.message)
       }
     });
   }).on('error', function(e) {
-    console.log("Got error: " + e.message);
+    errorCallback(e.message)
   });
-
-  return {
-    'message': 'you searched for ['+ searchText + ']'
-  }
-};
-
-// export the class
-module.exports = new BeerAdvocateParser();
+}
