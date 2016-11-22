@@ -1,4 +1,6 @@
-CREATE TABLE `beer_shelf`.`shelf` (
+USE `beer_shelf`;
+
+CREATE TABLE `shelf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `beer_id` INT NOT NULL,
@@ -8,11 +10,11 @@ CREATE TABLE `beer_shelf`.`shelf` (
   INDEX `fk_shelf_beer_idx` (`beer_id` ASC),
   CONSTRAINT `fk_shelf_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `beer_shelf`.`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_shelf_beer`
     FOREIGN KEY (`beer_id`)
-    REFERENCES `beer_shelf`.`beers` (`id`)
+    REFERENCES `beers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
