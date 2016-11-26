@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Beer Shelf</title>
+    <base href="/">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="styles/beer-shelf.css" />
@@ -19,19 +20,26 @@
     <script src="core/user/user.service.js"></script>
     <script src="core/auth/auth.module.js"></script>
     <script src="core/auth/auth.service.js"></script>
-    <script src="main-header/main-header.module.js"></script>
-    <script src="main-header/main-header.component.js"></script>
+    <script src="main-header.component.js"></script>
     <script src="login/login.module.js"></script>
     <script src="login/login.component.js"></script>
     <script src="shelf/shelf.module.js"></script>
     <script src="shelf/shelf.component.js"></script>
     <script src="user-list/user-list.module.js"></script>
     <script src="user-list/user-list.component.js"></script>
+    <script src="settings/settings.module.js"></script>
+    <script src="settings/settings.component.js"></script>
     <script src="modal-window/modal-window.module.js"></script>
     <script src="modal-window/modal-window.component.js"></script>
   </head>
   <body>
-      <div ng-view></div>
+
+      <div ng-controller="BeerShelfController as bsc">
+        <main-header></main-header
+        <pre>$location.path() = {{bsc.$location.path()}}</pre>
+        <pre>user = {{bsc.Auth.user.name}}</pre>
+        <div ng-view></div>
+      </div>
       <!-- Bootstrap core JavaScript
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->

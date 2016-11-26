@@ -4,13 +4,9 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$window',
+    controller: [
       function ShelfController(Auth, $window) {
-        this.currentUser = Auth.getCurrentUser();
-        if (!this.currentUser) {
-          //$window.location.href = '#/logout';
-        }
-
+        this.message = 'hi there!'
       }
     ]
   });

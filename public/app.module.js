@@ -4,8 +4,9 @@
 var phonecatApp = angular.module('beerShelfApp', [
   'ngRoute',
   'core',
-  'mainHeader',
+  //'mainHeader',
   'login',
   'shelf',
+  'settings',
   'userList'
 ]);

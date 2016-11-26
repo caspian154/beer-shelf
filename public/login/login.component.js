@@ -4,12 +4,12 @@ angular.
   module('login').
   component('login', {
     templateUrl: 'login/login.template.html',
-    controller: ['Auth', '$window',
-      function LoginController(Auth, $window) {
+    controller: ['Auth', '$location',
+      function LoginController(Auth, $location) {
         var self = this;
 
         function loginSuccess(response) {
-          $window.location.href = '#!/shelf';
+          $location.path('/shelf').replace();
         }
 
         function loginFailure(response) {
