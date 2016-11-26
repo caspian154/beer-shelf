@@ -4,9 +4,13 @@ angular.
   module('mainHeader').
   component('mainHeader', {
     templateUrl: 'main-header/main-header.template.html',
-    controller: ['Auth',
-      function MainHeaderController(Auth) {
+    controller: ['Auth', '$location',
+    function MainHeaderController(Auth, $location) {
         this.user = Auth.getCurrentUser()
+
+        this.isActive = function (loc) {
+          return $location.path().startsWith(loc)
+        }
       }
     ]
   });

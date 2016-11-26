@@ -14,11 +14,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">Shelf</a>
+                <li ng-class="{ active: $ctrl.isActive('/shelf') }">
+                    <a href="#!/shelf">Shelf</a>
+                </li>
+                <li ng-class="{ active: $ctrl.isActive('/reviews') }">
+                    <a href="#!/reviews">Reviews</a>
                 </li>
                 <li>
-                    <a href="#">Reviews</a>
+                    The active path: {{$location.path()}}
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -28,6 +28,9 @@ angular.
         .when('/shelf', {
           template: '<main-header></main-header><shelf></shelf>'
         })
+        .when('/reviews', {
+          template: '<main-header></main-header><reviews></reviews>'
+        })
         .otherwise('/shelf');
     }
   ]);
