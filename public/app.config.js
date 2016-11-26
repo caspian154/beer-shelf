@@ -31,6 +31,9 @@ angular.
         .when('/reviews', {
           template: '<main-header></main-header><reviews></reviews>'
         })
-        .otherwise('/shelf');
+        .when('/settings/:setting?', {
+          template: '<main-header></main-header><settings></settings>'
+        })
+        .otherwise('/settings');
     }
   ]);

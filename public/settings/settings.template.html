@@ -1,0 +1,55 @@
+<nav class="navbar navbar-default navbar-lower" role="navigation">
+  <div class="container">
+    <!-- <form class="navbar-form navbar-left" role="search">
+      <button class="btn btn-success">Button</button>
+      <button class="btn btn-default">Button</button>
+      <button class="btn btn-default">Button</button>
+      <button class="btn btn-default">Button</button>
+    </form> -->
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sub-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <!-- <a class="navbar-brand" href="#">Beer Shelf</a> -->
+    </div>
+    <div id="sub-navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-left">
+          <li ng-class="{ active: $ctrl.isActive('breweries') }">
+              <a href="#!/settings/breweries">Breweries</a>
+          </li>
+          <li ng-class="{ active: $ctrl.isActive('beers') }">
+              <a href="#!/settings/beers">Beers</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+
+      <!--Body content-->
+      <div ng-show="$ctrl.setting === 'breweries'">
+        <table class="table table-striped">
+          <thead class="thead-default">
+            <tr>
+              <th>Brewery Id</th>
+              <th>Name</th>
+              <th>Beer Advocate</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="brewery in $ctrl.breweries | filter: $ctrl.query | orderBy: $ctrl.orderBy">
+            <td>{{brewery.id}}</td>
+            <td><a href="https://www.beeradvocate.com/beer/profile/{{brewery.beer_advocate_id}}/">{{brewery.name}}</a></td>
+            <td>{{brewery.beer_advocate_id}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
