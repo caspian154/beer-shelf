@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <!-- <div class="col-md-2">
+
+    </div> -->
+    <div class="col-md-10">
+      <!--Body content-->
+        <form ng-submit="$ctrl.updateUser()">
+          <div class="Subhead">
+            <h2>Account Details</h2>
+          </div>
+
+          <div class="form-group">
+            <label for="inputEmail">Email address</label>
+            <input id="inputEmail" type="email" ng-model="$ctrl.currentUser.email" class="form-control" placeholder="Email address" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input id="inputName" type="text" ng-model="$ctrl.currentUser.name" class="form-control" placeholder="Full Name" required>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword1">New Password</label>
+            <input id="inputPassword1" type="password" ng-model="$ctrl.currentUser.newPassword1" class="form-control" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword2">Confirm New Password</label>
+            <input id="inputPassword2" type="password" ng-model="$ctrl.currentUser.newPassword2" class="form-control" placeholder="Password" required>
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+
+          <br />
+          <div class="alert alert-danger fade in">
+          {{$ctrl.error}}
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
