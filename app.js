@@ -1,5 +1,7 @@
 'use strict';
 
+var dbinit = require('./database/init')
+dbinit();
 var express = require('express');
 var app = express();
 var router = express.Router();

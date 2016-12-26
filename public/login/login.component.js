@@ -20,8 +20,8 @@ angular.
           Auth.login({email: self.email, password: self.password}, loginSuccess, loginFailure);
         }
 
-        self.email = 'srtelle@gmail.com';
-        self.password = 'test';
+        self.email = 'admin@beershelf.com';
+        self.password = 'admin';
       }
     ]
   });

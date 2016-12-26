@@ -1,3 +1,3 @@
 module.exports = {
-	'secret': 'beersecretphrase is good'
+	'secret': process.env.BS_SECRET || 'beersecretphrase is good'
 };
