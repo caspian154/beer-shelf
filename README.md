@@ -8,6 +8,5 @@ A Beer shelf app for keeping track of the beers in the basement and reviews of w
 4. Install nodemon using `npm install -g nodemon`
 5. Install the remaining dependencies with `npm install`.
 6. Run the app by executing the `nodemon` command.
-7. In order to do anything in the app, you'll need to create a SQL database, I recommend MySQL.
-	* The database connection settings are in `database.js`.
-	* Create scripts for the SQL database are in `/database`.
+7. The app will set up a sqlite3 database and seed some initial data.
+	* The database connection settings are in `database/knexfile.js`.
