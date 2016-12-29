@@ -20,7 +20,7 @@ angular.
         this.createUser = function() {
           User.create(self.newUser, function(newUser) {
             self.users.push(newUser)
-            $('#myModal').modal('hide') 
+            $('#myModal').modal('hide')
           })
         }
         /** End of functions **/
@@ -35,7 +35,8 @@ angular.
         this.newUser = {
           email: 'test@test.com',
           password: 'test123',
-          name: 'Test User'
+          name: 'Test User',
+          reset_password_flag: true
         }
       }
     ]

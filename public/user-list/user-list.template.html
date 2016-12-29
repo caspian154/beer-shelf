@@ -4,10 +4,16 @@
 
     </div> -->
     <div class="col-md-10">
-      <p>
-        Search:
-        <input ng-model="$ctrl.query.name">
-      </p>
+      <div class="form-inline"> 
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          Add User
+        </button>
+        <div class="form-group">
+          <label for"txt-user-search">Search:</label>
+          <input id="txt-user-search" ng-model="$ctrl.query.name" class="form-control">
+        </div>
+      </div>
+
       <!--Body content-->
       <div class="users">
         <table class="table table-striped">
@@ -25,24 +31,27 @@
           </tr>
         </table>
       </div>
-      
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Add User
-      </button>
 
       <modal-window>
         <form ng-submit="$ctrl.createUser()">
           <h2>Create a new user</h2>
-          <label for="inputEmail" class="sr-only">Email address</label>
+          <label for="inputEmail">Email address</label>
           <input type="email" ng-model="$ctrl.newUser.email" class="form-control" placeholder="Email address" required autofocus>
 
-          <label for="inputPassword" class="sr-only">Password</label>
+          <label for="inputPassword">Password</label>
           <input type="password" ng-model="$ctrl.newUser.password" class="form-control" placeholder="Password" required>
 
-          <label for="inputText" class="sr-only">Name</label>
+          <label for="inputText">Name</label>
           <input type="text" ng-model="$ctrl.newUser.name" class="form-control" placeholder="Full Name" required>
 
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" ng-model="$ctrl.newUser.reset_password_flag" >
+              Require password reset with login
+            </label>
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
 
           <br />
           <div class="error-text">
