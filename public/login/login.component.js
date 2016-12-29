@@ -19,15 +19,17 @@ angular.
         }
 
         function loginFailure(response) {
-          self.error = "Invalid credentials";
+          if (response.message) {
+            self.error = response.message
+          }
+          else {
+            self.error = "Invalid credentials"; 
+          }
         }
 
         this.login = function () {
           Auth.login({email: self.email, password: self.password}, loginSuccess, loginFailure);
         }
-
-        self.email = 'admin@beershelf.com';
-        self.password = 'admin';
       }
     ]
   });

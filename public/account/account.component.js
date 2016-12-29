@@ -14,6 +14,7 @@ angular.
           if (self.currentUser.newPassword1 || self.currentUser.newPassword2) {
             if (self.currentUser.newPassword1 === self.currentUser.newPassword2) {
               self.currentUser.password = self.currentUser.newPassword1
+              self.currentUser.reset_password_flag = false
             }
             else {
               self.error = "New Password and Confirm New Password do not match"
@@ -27,6 +28,11 @@ angular.
           User.update(self.currentUser, function(userObject) {
             self.currentUser = userObject
             self.success = true
+            Auth.updateUser(function (){
+              $window.location.href = '#!/';
+            }, function() {
+
+            });
           })
         }
 

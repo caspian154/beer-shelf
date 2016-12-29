@@ -30,9 +30,6 @@ angular.
       }
 
       return {
-        // signup: function (data, success, error) {
-        //
-        // },
         login: function (data, success, error) {
             $http.post('/api/authenticate', data).success(function (response) {
               if (response) {
@@ -51,6 +48,19 @@ angular.
         }
         , logout: function () {
           delete $http.defaults.headers.common['X-Access-Token'];
+        }
+        , updateUser: function(success, error) {
+            $http.get('/api/authenticate').success(function (response) {
+              if (response) {
+                if (!response.success && response.message) {
+                  error(response)
+                }
+                else if (response.success && response.token){
+                  $http.defaults.headers.common['X-Access-Token'] = response.token;
+                  success();
+                }
+              }
+            }).error(error)
         }
       };
     }

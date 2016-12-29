@@ -3,8 +3,6 @@ var env       = 'development';
 var knex      = require('knex')(config[env]);
 const util    = require('util')
 
-// console.log(util.inspect(myObject, {showHidden: false, depth: null}))
-
 function init() {
   console.log('Migrating db...')
 
