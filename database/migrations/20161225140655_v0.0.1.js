@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       table.string('email');
       table.string('name');
       table.string('password');
+      table.boolean('reset_password_flag')
       table.timestamps();
     }),
     knex.schema.createTable('breweries', function(table){

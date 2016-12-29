@@ -6,6 +6,7 @@ var phonecatApp = angular.module('beerShelfApp', [
   'core',
   'mainHeader',
   'login',
+  'account',
   'shelf',
   'reviews',
   'settings',

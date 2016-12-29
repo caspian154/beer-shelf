@@ -9,7 +9,13 @@ angular.
         var self = this;
 
         function loginSuccess(response) {
-          $window.location.href = '#!/shelf';
+          var user = Auth.getCurrentUser()
+          if (user.reset_password_flag) {
+            $window.location.href = '#!/account'
+          }
+          else {
+            $window.location.href = '#!/shelf';
+          }
         }
 
         function loginFailure(response) {

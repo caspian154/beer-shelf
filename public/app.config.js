@@ -19,6 +19,9 @@ angular.
             }
           ]
         })
+        .when('/account', {
+          template: '<main-header></main-header><account></account>'
+        })
         .when('/users', {
           template: '<main-header></main-header><user-list></user-list>'
         })

@@ -9,7 +9,8 @@ exports.seed = function(knex, Promise) {
           id: 1,
           email: 'admin@beershelf.com',
           name: 'admin',
-          password: 'admin'}),
+          password: 'admin',
+          reset_password_flag: true}),
       ]);
     });
 };
