@@ -4,5 +4,10 @@ angular.
   module('modalWindow').
   component('modalWindow', {
     transclude: true,
-    templateUrl: 'modal-window/modal-window.template.html'
+    templateUrl: 'modal-window/modal-window.template.html',
+    bindings: {
+      hideModalButtons: "<",
+      modalId: "@",
+      modalTitle: "@"
+    }
   });

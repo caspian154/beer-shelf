@@ -20,7 +20,7 @@ angular.
         this.createUser = function() {
           User.create(self.newUser, function(newUser) {
             self.users.push(newUser)
-            $('#myModal').modal('hide')
+            $('#modal-add-user').modal('hide')
           })
         }
         /** End of functions **/

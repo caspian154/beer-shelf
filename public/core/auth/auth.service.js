@@ -1,6 +1,6 @@
 angular.
   module('core.auth').
-  factory('Auth', ['$http',
+  factory('Auth', ['$http', '$window',
     function($http) {
       function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
@@ -21,6 +21,9 @@ angular.
 
       function getCurrentUserFromToken() {
         var token = $http.defaults.headers.common['X-Access-Token'];
+        if (!token) {
+          token = $http.defaults.headers.common['X-Access-Token'] = window.sessionStorage["userInfo"]
+        }
         var user
         if (typeof token !== 'undefined') {
           var encoded = token.split('.')[1];
@@ -38,6 +41,7 @@ angular.
                 }
                 else if (response.success && response.token){
                   $http.defaults.headers.common['X-Access-Token'] = response.token;
+                  window.sessionStorage["userInfo"] = response.token
                   success();
                 }
               }
@@ -48,6 +52,7 @@ angular.
         }
         , logout: function () {
           delete $http.defaults.headers.common['X-Access-Token'];
+          delete window.sessionStorage["userInfo"];
         }
         , updateUser: function(success, error) {
             $http.get('/api/authenticate').success(function (response) {
@@ -57,6 +62,7 @@ angular.
                 }
                 else if (response.success && response.token){
                   $http.defaults.headers.common['X-Access-Token'] = response.token;
+                  window.sessionStorage["userInfo"] = response.token
                   success();
                 }
               }

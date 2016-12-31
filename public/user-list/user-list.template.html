@@ -4,8 +4,8 @@
 
     </div> -->
     <div class="col-md-10">
-      <div class="form-inline"> 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      <div class="form-inline">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-user">
           Add User
         </button>
         <div class="form-group">
@@ -32,9 +32,8 @@
         </table>
       </div>
 
-      <modal-window>
+      <modal-window modal-id='modal-add-user' modal-title='Create a new user' hide-modal-buttons='true'>
         <form ng-submit="$ctrl.createUser()">
-          <h2>Create a new user</h2>
           <label for="inputEmail">Email address</label>
           <input type="email" ng-model="$ctrl.newUser.email" class="form-control" placeholder="Email address" required autofocus>
 

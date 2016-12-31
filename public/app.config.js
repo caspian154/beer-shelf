@@ -37,6 +37,6 @@ angular.
         .when('/settings/:setting?', {
           template: '<main-header></main-header><settings></settings>'
         })
-        .otherwise('/settings');
+        .otherwise('/shelf');
     }
   ]);

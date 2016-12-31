@@ -23,7 +23,7 @@ angular.
         self.createBrewery = function() {
           Brewery.create(self.newBrewery, function(newBrewery) {
             self.breweries.push(newBrewery)
-            $('#myModal').modal('hide')
+            $('#modal-add-breweries').modal('hide')
           })
         }
         // is 'setting' the current tab?
