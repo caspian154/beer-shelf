@@ -4,8 +4,8 @@ angular.
   module('settings').
   component('settings', {
     templateUrl: 'settings/settings.template.html',
-    controller: ['Auth','$window', '$routeParams', 'Brewery',
-      function SettingsController(Auth, $window, $routeParams, Brewery) {
+    controller: ['Auth','$window', '$routeParams', 'Brewery', 'Beer',
+      function SettingsController(Auth, $window, $routeParams, Brewery, Beer) {
         self = this
         self.currentUser = Auth.getCurrentUser()
         if (!self.currentUser) {
@@ -17,6 +17,11 @@ angular.
         self.loadBreweries = function() {
           Brewery.get(function(response) {
             self.breweries = response
+          })
+        }
+        self.loadBeers = function() {
+          Beer.get(function(response) {
+            self.beers = response
           })
         }
         // button clicked to open the add brewery window
@@ -63,6 +68,9 @@ angular.
 
         if (self.setting === 'breweries') {
           self.loadBreweries()
+        }
+        else if (self.setting  === 'beers') {
+          self.loadBeers()
         }
       }
     ]

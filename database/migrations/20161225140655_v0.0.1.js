@@ -17,7 +17,9 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('beers', function(table){
       table.increments();
-      table.string('email');
+      table.string('name');
+      table.string('style');
+      table.double('abv');
       table.int('brewery_id');
       table.string('beer_advocate_id');
       table.timestamps();

@@ -55,6 +55,37 @@
           </table>
         </div>
       </div>
+      <div ng-show="$ctrl.setting === 'beers'">
+        <div class="col-md-10">
+          <div class="form-inline">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
+              Add Beers
+            </button>
+            <div class="form-group">
+              <label for"txt-beer-search">Filter:</label>
+              <input id="txt-beer-search" ng-model="$ctrl.query.name" class="form-control">
+            </div>
+          </div>
+          <table class="table table-striped" ng-show='$ctrl.beers.length > 0'>
+            <thead class="thead-default">
+              <tr>
+                <th>Beer Id</th>
+                <th>Name</th>
+                <th>Style</th>
+                <th>ABV</th>
+                <th>Beer Advocate</th>
+              </tr>
+            </thead>
+            <tr ng-repeat="beer in $ctrl.beers | filter: $ctrl.query | orderBy: $ctrl.orderBy">
+              <td>{{beer.id}}</td>
+              <td><a href="https://www.beeradvocate.com/beer/profile/{{beer.beer_advocate_id}}/">{{beer.name}}</a></td>
+              <td>{{beer.style}}</td>
+              <td>{{beer.abv}}</td>
+              <td>{{beer.beer_advocate_id}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 

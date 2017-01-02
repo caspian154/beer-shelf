@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
+var Beer = require('../models/beer')
 var Brewery = require('../models/brewery')
 var Breweries = require('../models/breweries')
 var Parser = require('./external-lookup/BeerAdvocateParser')
@@ -43,6 +44,27 @@ router.route('/breweries')
     })
     .save()
     .then(function (brewery) {
+      // is there a better place to do this?
+      // add all the beers for this brewery
+      Parser.lookupBeers(brewery.get('beer_advocate_id'),
+        function(beers) {
+          if (beers) {
+            beers.forEach(function(item) {
+              Beer.forge({
+                name: item.name,
+                beer_advocate_id: item.beer_advocate_id,
+                abv: item.abv,
+                style: item.style,
+                brewery_id: brewery.get('id')
+              }).save()
+              // don't really care if they fail?
+            })
+          }
+        },
+        function(errorMessage) {
+          console.error('Something went wrong adding beers' + errorMessage);
+        })
+
       res.json({error: false, data: {id: brewery.get('id')}})
     })
     .otherwise(function (err) {

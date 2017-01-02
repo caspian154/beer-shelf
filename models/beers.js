@@ -3,7 +3,7 @@
 let bookshelf = require('../database');
 let Beer = require('./beer');
 
-var Users = bookshelf.Collection.extend({
+var Beers = bookshelf.Collection.extend({
   model: Beer
 });
 
