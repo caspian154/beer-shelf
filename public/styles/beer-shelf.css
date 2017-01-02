@@ -25,3 +25,18 @@ h1 {
 .list-group-clickable:hover {
   background-color: #eceeef;
 }
+
+.form-inline div {
+  margin-left: 10px;
+}
+
+.sortorder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+.sortorder.reverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+
+.clickable {
+  cursor: pointer;
+}

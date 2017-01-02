@@ -1,13 +1,20 @@
 
 exports.up = function(knex, Promise) {
   return Promise.all([
+    knex.schema.createTable('roles', function(table){
+      table.increments();
+      table.string('name');
+      table.timestamps();
+    }),
     knex.schema.createTable('users', function(table){
       table.increments();
       table.string('email');
       table.string('name');
       table.string('password');
+      table.int('role_id');
       table.boolean('reset_password_flag')
       table.timestamps();
+      table.foreign('role_id').references('roles.id')
     }),
     knex.schema.createTable('breweries', function(table){
       table.increments();

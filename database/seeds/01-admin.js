@@ -5,12 +5,19 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         // Inserts seed entries
-        knex('users').insert({
+        knex('roles').insert({
+          id: 0,
+          name: 'user'}),
+        knex('roles').insert({
           id: 1,
+          name: 'admin'}),
+        knex('users').insert({
+          id: 0,
           email: 'admin@beershelf.com',
           name: 'admin',
           password: 'admin',
-          reset_password_flag: true}),
+          role_id: 1
+          reset_password_flag: true})
       ]);
     });
 };

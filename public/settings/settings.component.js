@@ -59,11 +59,17 @@ angular.
 
           self.loadBreweries()
         }
+        // update the sort by 
+        self.sortBy = function(orderBy) {
+          self.reverse = (self.orderBy === orderBy) ? !self.reverse : false;
+          self.orderBy = orderBy;
+        };
         /** End of functions **/
 
         self.setting = $routeParams.setting ? $routeParams.setting : 'breweries'
         self.query = ''
         self.orderBy = 'name'
+        self.reverse = false
         self.baList = []
 
         if (self.setting === 'breweries') {

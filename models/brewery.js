@@ -3,7 +3,8 @@
 let bookshelf = require('../database');
 
 var Brewery = bookshelf.Model.extend({
-  tableName: 'breweries'
+  tableName: 'breweries',
+  hasTimestamps: true
 });
 
 module.exports = Brewery;

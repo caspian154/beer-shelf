@@ -1,90 +1,102 @@
 <nav class="navbar navbar-default navbar-lower" role="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sub-navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <!-- <a class="navbar-brand" href="#">Beer Shelf</a> -->
-    </div>
-    <div id="sub-navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-left">
-          <li ng-class="{ active: $ctrl.isActive('breweries') }">
-              <a href="#!/settings/breweries">Breweries</a>
-          </li>
-          <li ng-class="{ active: $ctrl.isActive('beers') }">
-              <a href="#!/settings/beers">Beers</a>
-          </li>
-      </ul>
-    </div>
+<div class="container">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sub-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Beer Shelf</a> -->
   </div>
+  <div id="sub-navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav navbar-left">
+        <li ng-class="{ active: $ctrl.isActive('breweries') }">
+            <a href="#!/settings/breweries">Breweries</a>
+        </li>
+        <li ng-class="{ active: $ctrl.isActive('beers') }">
+            <a href="#!/settings/beers">Beers</a>
+        </li>
+    </ul>
+  </div>
+</div>
 </nav>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-10">
+<div class="row">
+  <div class="col-md-10">
 
-      <!--Body content-->
-      <div ng-show="$ctrl.setting === 'breweries'">
-        <div class="col-md-10">
-          <div class="form-inline">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-breweries" ng-click="$ctrl.openAddBrewery()">
-              Add Breweries
-            </button>
-            <div class="form-group">
-              <label for"txt-brewery-search">Filter:</label>
-              <input id="txt-brewery-search" ng-model="$ctrl.query.name" class="form-control">
-            </div>
+    <!--Body content-->
+    <div ng-show="$ctrl.setting === 'breweries'">
+        <div class="form-inline">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-breweries" ng-click="$ctrl.openAddBrewery()">
+            Add Breweries
+          </button>
+          <div class="form-group">
+            <label for"txt-brewery-search left-pad-control">Filter:</label>
+            <input id="txt-brewery-search" ng-model="$ctrl.query.name" class="form-control">
           </div>
-          <table class="table table-striped" ng-show='$ctrl.breweries.length > 0'>
-            <thead class="thead-default">
-              <tr>
-                <th>Brewery Id</th>
-                <th>Name</th>
-                <th>Beer Advocate</th>
-              </tr>
-            </thead>
-            <tr ng-repeat="brewery in $ctrl.breweries | filter: $ctrl.query | orderBy: $ctrl.orderBy">
-              <td>{{brewery.id}}</td>
-              <td><a href="https://www.beeradvocate.com/beer/profile/{{brewery.beer_advocate_id}}/">{{brewery.name}}</a></td>
-              <td>{{brewery.beer_advocate_id}}</td>
-            </tr>
-          </table>
         </div>
+        <table class="table table-striped" ng-show='$ctrl.breweries.length > 0'>
+          <thead class="thead-default">
+            <tr>
+              <th>Brewery Id</th>
+              <th class="clickable" ng-click="$ctrl.sortBy('name')">
+                  Name <i class="fa" ng-class="($ctrl.orderBy !== 'name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+              <th class="clickable" ng-click="$ctrl.sortBy('beer_advocate_id')">
+                Beer Advocate <i class="fa" ng-class="($ctrl.orderBy !== 'beer_advocate_id') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+            </tr>
+          </thead>
+          <tr ng-repeat="brewery in $ctrl.breweries | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
+            <td>{{brewery.id}}</td>
+            <td><a href="https://www.beeradvocate.com/beer/profile/{{brewery.beer_advocate_id}}/">{{brewery.name}}</a></td>
+            <td>{{brewery.beer_advocate_id}}</td>
+          </tr>
+        </table>
       </div>
       <div ng-show="$ctrl.setting === 'beers'">
-        <div class="col-md-10">
-          <div class="form-inline">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
-              Add Beers
-            </button>
-            <div class="form-group">
-              <label for"txt-beer-search">Filter:</label>
-              <input id="txt-beer-search" ng-model="$ctrl.query.name" class="form-control">
-            </div>
+        <div class="form-inline">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
+            Add Beers
+          </button>
+          <div class="form-group">
+            <label for"txt-beer-search">Filter:</label>
+            <input id="txt-beer-search" ng-model="$ctrl.query.name" class="form-control">
           </div>
-          <table class="table table-striped" ng-show='$ctrl.beers.length > 0'>
-            <thead class="thead-default">
-              <tr>
-                <th>Beer Id</th>
-                <th>Name</th>
-                <th>Style</th>
-                <th>ABV</th>
-                <th>Beer Advocate</th>
-              </tr>
-            </thead>
-            <tr ng-repeat="beer in $ctrl.beers | filter: $ctrl.query | orderBy: $ctrl.orderBy">
-              <td>{{beer.id}}</td>
-              <td><a href="https://www.beeradvocate.com/beer/profile/{{beer.beer_advocate_id}}/">{{beer.name}}</a></td>
-              <td>{{beer.style}}</td>
-              <td>{{beer.abv}}</td>
-              <td>{{beer.beer_advocate_id}}</td>
-            </tr>
-          </table>
         </div>
+        <table class="table table-striped" ng-show='$ctrl.beers.length > 0'>
+          <thead class="thead-default">
+            <tr>
+              <th>Beer Id</th>
+              <th class="clickable" ng-click="$ctrl.sortBy('brewery.name')">
+                  Brewery <i class="fa" ng-class="($ctrl.orderBy !== 'brewery.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+              <th class="clickable" ng-click="$ctrl.sortBy('name')">
+                  Name <i class="fa" ng-class="($ctrl.orderBy !== 'name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+              <th class="clickable" ng-click="$ctrl.sortBy('style')">
+                Style <i class="fa" ng-class="($ctrl.orderBy !== 'style') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+              <th class="clickable" ng-click="$ctrl.sortBy('abv')">
+                ABV <i class="fa" ng-class="($ctrl.orderBy !== 'abv') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+              <th class="clickable" ng-click="$ctrl.sortBy('beer_advocate_id')">
+                Beer Advocate <i class="fa" ng-class="($ctrl.orderBy !== 'beer_advocate_id') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              </th>
+            </tr>
+          </thead>
+          <tr ng-repeat="beer in $ctrl.beers | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
+            <td>{{beer.id}}</td>
+            <td>{{beer.brewery.name}}</td>
+            <td><a href="https://www.beeradvocate.com/beer/profile/{{beer.brewery.beer_advocate_id}}/{{beer.beer_advocate_id}}/">{{beer.name}}</a></td>
+            <td>{{beer.style}}</td>
+            <td>{{beer.abv}}</td>
+            <td>{{beer.beer_advocate_id}}</td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

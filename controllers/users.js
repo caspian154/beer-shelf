@@ -30,6 +30,7 @@ router.route('/users/:user_id')
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        role_id: req.body.role_id,
         reset_password_flag: req.body.reset_password_flag
       })
       .then(function () {
@@ -49,7 +50,7 @@ router.route('/users')
   .get(function (req, res) {
     Users.forge()
     .fetch({
-      columns: ['id', 'email', 'name', 'reset_password_flag']
+      columns: ['id', 'email', 'name', 'reset_password_flag', 'role_id']
     })
     .then(function (collection) {
       res.json(collection.toJSON());
@@ -64,6 +65,7 @@ router.route('/users')
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      role_id: req.body.role_id,
       reset_password_flag: req.body.reset_password_flag
     })
     .save()
