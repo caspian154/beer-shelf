@@ -53,9 +53,9 @@
           <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
 
           <br />
-          <div class="error-text">
-          {{$ctrl.error}}
-          </div>
+          <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
+      		{{$ctrl.error}}
+      		</div>
         </form>
       </modal-window>
     </div>

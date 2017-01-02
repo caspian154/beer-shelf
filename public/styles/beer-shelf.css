@@ -17,3 +17,11 @@ h1 {
     line-height: 20px;
     color: #999;
 }
+
+.brewery-search {
+  margin-bottom: 10px;
+}
+
+.list-group-clickable:hover {
+  background-color: #eceeef;
+}

@@ -19,22 +19,47 @@ angular.
             self.breweries = response
           })
         }
-        // Create a new user
-        self.createBrewery = function() {
-          Brewery.create(self.newBrewery, function(newBrewery) {
-            self.breweries.push(newBrewery)
-            $('#modal-add-breweries').modal('hide')
-          })
+        // button clicked to open the add brewery window
+        self.openAddBrewery = function() {
+          self.baSearchString = ""
+          self.baList = []
+        }
+        // Search Beer Advocate
+        self.searchBeerAdvocate = function() {
+          Brewery.search(self.baSearchString, function(response) {
+              self.baList = response
+              self.selectBreweries(true)
+            },
+            function(response) {
+              self.addError = response
+            })
         }
         // is 'setting' the current tab?
         self.isActive = function(setting) {
           return setting === self.setting
+        }
+        // select or unselect all the checkboxes
+        self.selectBreweries = function(check) {
+          angular.forEach(self.baList, function(item) {
+            item.checked = check
+          })
+        }
+        // add the selected breweries to the database
+        self.addSelectedBreweries = function() {
+          angular.forEach(self.baList, function(item) {
+            if (item.checked) {
+              Brewery.create(item, function() {}, function() {})
+            }
+          })
+
+          self.loadBreweries()
         }
         /** End of functions **/
 
         self.setting = $routeParams.setting ? $routeParams.setting : 'breweries'
         self.query = ''
         self.orderBy = 'name'
+        self.baList = []
 
         if (self.setting === 'breweries') {
           self.loadBreweries()

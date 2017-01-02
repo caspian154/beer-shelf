@@ -54,7 +54,7 @@ router.route('/external-breweries/:text')
   .get(function (req, res) {
     Parser.lookupBreweries(req.params.text,
       function(breweries) {
-        res.json(breweries)
+        res.json({error: false, data: breweries})
       },
       function(errorMessage) {
         res.status(500).json({error: true, data: {message: errorMessage}})

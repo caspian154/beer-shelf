@@ -9,8 +9,8 @@ angular.
           }).error(function(response) {
             if (error) error(response)
           })
-        }
-        ,create: function (newBrewery, success, error) {
+        },
+        create: function (newBrewery, success, error) {
           $http.post('/api/breweries', newBrewery).success(function(response) {
             if (success) {
               if (response && response.data && response.data.id) {
@@ -23,6 +23,21 @@ angular.
           }).error(function(response) {
             if (error) error(response)
           })
+        },
+        search: function (searchString, success, error) {
+          if (searchString) {
+            $http.get('/api/external-breweries/' + searchString).success(function(response) {
+              if (success) {
+                if (response && response.data) {
+                  success(response.data)
+                  return
+                }
+              }
+              error(response)
+            }).error(function(response) {
+              if (error) error(response)
+            })
+          }
         }
       }
     }

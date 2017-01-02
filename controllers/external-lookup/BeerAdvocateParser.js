@@ -3,6 +3,7 @@
 var https = require('https')
 var cheerio = require('cheerio')
 var S = require('string')
+var unescape = require('unescape')
 
 /** Parse the page returned from BA **/
 function parseHtml(html, searchText) {
@@ -12,7 +13,10 @@ function parseHtml(html, searchText) {
   $('a').each(function(i, elem) {
     var link = $(elem);
     if (link.attr('href') && S(link.attr('href')).startsWith('/beer/profile') ) {
-      results.push({url: link.attr('href'), name: link.html()})
+      var name = unescape($(link.html()).html())
+      var id = link.attr('href')
+      id = S(id).chompLeft('/beer/profile/').chompRight('/').s
+      results.push({beer_advocate_id: id, name: name})
     }
   });
 
