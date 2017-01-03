@@ -1,8 +1,70 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
       <!--Body content-->
-      <p>Beer Shelf for {{$ctrl.currentUser.name}}</p>
+      <div class="form-inline">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
+          Add Beer
+        </button>
+        <div class="form-group">
+          <label for"txt-brewery-search left-pad-control">Filter:</label>
+          <input id="txt-brewery-search" ng-model="$ctrl.query.name" class="form-control">
+        </div>
+      </div>
+      <table class="table table-striped" ng-show='$ctrl.shelfBeers.length > 0'>
+        <thead class="thead-default">
+          <tr>
+            <th class="clickable" ng-click="$ctrl.sortBy('beer.brewery.name')">
+              Brewery <i class="fa" ng-class="($ctrl.orderBy !== 'beer.brewery.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th class="clickable" ng-click="$ctrl.sortBy('beer.name')">
+              Beer <i class="fa" ng-class="($ctrl.orderBy !== 'beer.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th class="clickable" ng-click="$ctrl.sortBy('beer.style')">
+              Style <i class="fa" ng-class="($ctrl.orderBy !== 'beer.style') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th class="clickable" ng-click="$ctrl.sortBy('beer.abv')">
+              ABV <i class="fa" ng-class="($ctrl.orderBy !== 'beer.abv') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th class="clickable" ng-click="$ctrl.sortBy('quantity')">
+              Count <i class="fa" ng-class="($ctrl.orderBy !== 'quantity') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+          </tr>
+        </thead>
+        <tr ng-repeat="shelfBeer in $ctrl.shelfBeers | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
+          <td>{{shelfBeer.beer.brewery.name}}</td>
+          <td>{{shelfBeer.beer.name}}</td>
+          <td>{{shelfBeer.beer.style}}</td>
+          <td>{{shelfBeer.beer.abv}}</td>
+          <td>{{shelfBeer.quantity}}</td>
+        </tr>
+      </table>
+
+      <modal-window modal-id='modal-add-beer' modal-title='Add Beer' hide-modal-buttons='true'>
+        <form ng-submit="$ctrl.addBeerToShelf()">
+          <div class="form-group">
+            <label for"txt-beer left-pad-control">Beer</label>
+            <input id="txt-beer" ng-model="$ctrl.newBeer.beer_id" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for"txt-quantity left-pad-control">Quantity</label>
+            <input id="txt-quantity" ng-model="$ctrl.newBeer.quantity" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for"txt-vintage left-pad-control">Vintage</label>
+            <input id="txt-vintage" ng-model="$ctrl.newBeer.vintage" class="form-control">
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Add Beer</button>
+
+          <br />
+          <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
+      		{{$ctrl.error}}
+      		</div>
+        </form>
+      </modal-window>
     </div>
   </div>
 </div>

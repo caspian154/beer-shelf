@@ -32,14 +32,30 @@ exports.up = function(knex, Promise) {
       table.timestamps();
       table.foreign('brewery_id').references('breweries.id')
     }),
-    knex.schema.createTable('shelf', function(table){
+    knex.schema.createTable('shelf_beers', function(table){
       table.increments();
       table.int('user_id');
       table.int('beer_id');
       table.int('quantity');
+      table.int('size');
+      table.date('vintage');
       table.timestamps();
       table.foreign('user_id').references('users.id')
       table.foreign('beer_id').references('beers.id')
+    }),
+    knex.schema.createTable('attribute_data_type', function(table){
+      table.increments()
+      table.string('name')
+      table.timestamps()
+    }),
+    knex.schema.createTable('shelf_attribute_type', function(table){
+      table.increments()
+      table.string('name')
+      table.string('attribute_data_type_id')
+      table.int('shelf_beers_id')
+      table.timestamps()
+      table.foreign('attribute_data_type_id').references('attribute_data_type.id')
+      table.foreign('shelf_beers_id').references('shelf_beers.id')
     })
   ])
 };

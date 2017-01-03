@@ -16,8 +16,17 @@ exports.seed = function(knex, Promise) {
           email: 'admin@beershelf.com',
           name: 'admin',
           password: 'admin',
-          role_id: 1
-          reset_password_flag: true})
+          role_id: 1,
+          reset_password_flag: true}),
+        knex('attribute_data_type').insert({
+          id: 1,
+          name: 'string'}),
+        knex('attribute_data_type').insert({
+          id: 2,
+          name: 'number'}),
+        knex('attribute_data_type').insert({
+          id: 3,
+          name: 'date'})
       ]);
     });
 };

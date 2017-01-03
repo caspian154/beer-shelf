@@ -1,3 +1,3 @@
 'use strict';
 // Define the `phoneList` module
-angular.module('shelf', []);
+angular.module('shelf', ['core.shelfBeer']);
