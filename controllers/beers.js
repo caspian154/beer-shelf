@@ -24,6 +24,22 @@ router.route('/beers/:beer_id')
     })
   })
 
+
+router.route('/beers-autocomplete')
+  // fetch all users
+  .get(function (req, res) {
+    Beers.forge()
+    .fetch({
+      withRelated: [{ brewery: function (b) { b.column('id', 'name') }}],
+      columns: ['id', 'name', 'brewery_id']})
+    .then(function (collection) {
+      res.json(collection.toJSON());
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    })
+  })
+
 router.route('/beers')
   // fetch all users
   .get(function (req, res) {

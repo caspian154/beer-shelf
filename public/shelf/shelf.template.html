@@ -40,11 +40,24 @@
         </tr>
       </table>
 
+      <script type="text/ng-template" id="beer-template.html">
+        <a>
+            <span ng-bind-html='match.label | uibTypeaheadHighlight:query'></span><br />
+            <span class="brewery-sub-text">{{match.model.brewery.name}}</span>
+        </a>
+      </script>
+
       <modal-window modal-id='modal-add-beer' modal-title='Add Beer' hide-modal-buttons='true'>
         <form ng-submit="$ctrl.addBeerToShelf()">
           <div class="form-group">
             <label for"txt-beer left-pad-control">Beer</label>
-            <input id="txt-beer" ng-model="$ctrl.newBeer.beer_id" class="form-control">
+            <!-- <input id="txt-beer" ng-model="$ctrl.newBeer.beer_id" class="form-control"> -->
+            <input type="text"
+              ng-model="$ctrl.newBeerSelection"
+              uib-typeahead="beer as beer.name for beer in $ctrl.beerDb | filter:$viewValue"
+              typeahead-template-url="beer-template.html"
+              typeahead-show-hint="true"
+              class="form-control">
           </div>
 
           <div class="form-group">

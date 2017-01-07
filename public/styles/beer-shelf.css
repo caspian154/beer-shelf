@@ -40,3 +40,8 @@ h1 {
 .clickable {
   cursor: pointer;
 }
+
+.brewery-sub-text {
+  font-size: 8pt;
+  font-style: italic;
+}

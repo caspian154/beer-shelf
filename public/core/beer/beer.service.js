@@ -10,6 +10,13 @@ angular.
             if (error) error(response)
           })
         },
+        getAutocomplete: function (success, error) {
+          $http.get('/api/beers-autocomplete').success(function(response) {
+            if (success) success(response)
+          }).error(function(response) {
+            if (error) error(response)
+          })
+        },
         create: function (newBeer, success, error) {
           $http.post('/api/beers', newBeer).success(function(response) {
             if (success) {

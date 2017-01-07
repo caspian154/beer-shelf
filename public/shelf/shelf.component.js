@@ -4,8 +4,8 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$window', 'ShelfBeer',
-      function ShelfController(Auth, $window, ShelfBeer) {
+    controller: ['Auth','$window', 'ShelfBeer', 'Beer',
+      function ShelfController(Auth, $window, ShelfBeer, Beer) {
         self = this
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
@@ -19,10 +19,16 @@ angular.
             self.shelfBeers = response
           })
         }
+        self.loadBeerDb = function() {
+          Beer.getAutocomplete(function(response) {
+            self.beerDb = response
+          })
+        }
         // add this beer to the shelf
         self.addBeerToShelf = function() {
           if (self.newBeer) {
             self.newBeer.user_id = self.currentUser.id
+            self.newBeer.beer_id = self.newBeerSelection.id
             ShelfBeer.create(self.newBeer, function() {}, function() {})
 
             self.loadShelfBeers()
@@ -38,6 +44,8 @@ angular.
           self.orderBy = orderBy;
         }
         /** End of functions **/
+
+        self.loadBeerDb()
 
         self.query = ''
         self.orderBy = 'name'
