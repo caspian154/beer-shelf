@@ -32,10 +32,12 @@ angular.
             ShelfBeer.create(self.newBeer, function() {}, function() {})
 
             self.loadShelfBeers()
+            $('#modal-add-beer').modal('hide')
           }
         }
         // button clicked to open the add brewery window
         self.openAddBeer = function() {
+          delete self.newBeerSelection
           self.newBeer = {}
         }
         // update the sort by

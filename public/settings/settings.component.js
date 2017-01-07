@@ -58,8 +58,9 @@ angular.
           })
 
           self.loadBreweries()
+          $('#modal-add-breweries').modal('hide')
         }
-        // update the sort by 
+        // update the sort by
         self.sortBy = function(orderBy) {
           self.reverse = (self.orderBy === orderBy) ? !self.reverse : false;
           self.orderBy = orderBy;
