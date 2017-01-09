@@ -55,7 +55,6 @@ router.route('/shelf-beers')
     })
   })
   .put(function (req, res) {
-    console.log('trying to edit beer: ' + req.body.id)
     ShelfBeer.forge({id: req.body.id})
     .fetch({require: true})
     .then(function (shelfBeer) {
