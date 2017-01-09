@@ -100,12 +100,12 @@
     </div>
   </div>
 
-  <modal-window modal-id='modal-add-breweries' modal-title='Add Brewery' hide-modal-buttons='true'>
+  <modal-window modal-id='modal-add-breweries' modal-title='Add Brewery' hide-modal-buttons='true' modal-focus="txt-ba-brewery-search">
     <h2>Add Breweries From Beer Advocate</h2>
 
     <form class="brewery-search" ng-submit="$ctrl.searchBeerAdvocate()">
       <div class="form-inline form-group">
-        <input id="txt-brewery-search" ng-model="$ctrl.baSearchString" class="form-control">
+        <input id="txt-ba-brewery-search" ng-model="$ctrl.baSearchString" class="form-control">
         <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </form>

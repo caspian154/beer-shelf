@@ -8,7 +8,7 @@
         </button>
         <div class="form-group">
           <label for"txt-brewery-search left-pad-control">Filter:</label>
-          <input id="txt-brewery-search" ng-model="$ctrl.query.name" class="form-control">
+          <input id="txt-brewery-search" ng-model="$ctrl.query.name" class="form-control" autofocus>
         </div>
       </div>
       <table class="table table-striped" ng-show='$ctrl.shelfBeers.length > 0'>
@@ -47,12 +47,17 @@
         </a>
       </script>
 
-      <modal-window modal-id='modal-add-beer' modal-title='Add Beer' hide-modal-buttons='true'>
+      <modal-window
+          modal-id='modal-add-beer'
+          modal-title='Add Beer'
+          hide-modal-buttons='true'
+          modal-focus="beer-selection">
         <form ng-submit="$ctrl.addBeerToShelf()">
           <div class="form-group">
             <label for"txt-beer left-pad-control">Beer</label>
             <!-- <input id="txt-beer" ng-model="$ctrl.newBeer.beer_id" class="form-control"> -->
             <input type="text"
+              id="beer-selection"
               ng-model="$ctrl.newBeerSelection"
               uib-typeahead="beer as beer.name for beer in $ctrl.beerDb | filter:$viewValue"
               typeahead-template-url="beer-template.html"

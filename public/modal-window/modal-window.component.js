@@ -8,6 +8,28 @@ angular.
     bindings: {
       hideModalButtons: "<",
       modalId: "@",
-      modalTitle: "@"
-    }
+      modalTitle: "@",
+      modalFocus: "@"
+    },
+    controller: ['$timeout',
+      function ShelfController($timeout) {
+        var self = this
+
+
+        /** Functions **/
+        // set the focus to the value specified in modalFocus
+        self.setFocus = function() {
+          if (self.modalFocus) {
+            $("#" + self.modalFocus).focus()
+          }
+        }
+        /** End of Functions **/
+
+        // Set callback on modal to call setfocus when the "shown" event fires
+        $timeout(function () {
+           $("#" + self.modalId).on('shown.bs.modal', function (e) {
+             self.setFocus()
+           })
+        }, 500)
+      }]
   });

@@ -7,8 +7,8 @@ angular.
     controller: ['Auth','$window', 'ShelfBeer', 'Beer',
       function ShelfController(Auth, $window, ShelfBeer, Beer) {
         self = this
-        this.currentUser = Auth.getCurrentUser();
-        if (!this.currentUser) {
+        self.currentUser = Auth.getCurrentUser();
+        if (!self.currentUser) {
           $window.location.href = '#!/logout';
         }
 
