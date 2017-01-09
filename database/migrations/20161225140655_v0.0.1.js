@@ -51,10 +51,17 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('shelf_attribute_type', function(table){
       table.increments()
       table.string('name')
-      table.string('attribute_data_type_id')
-      table.int('shelf_beers_id')
+      table.int('attribute_data_type_id')
       table.timestamps()
       table.foreign('attribute_data_type_id').references('attribute_data_type.id')
+    }),
+    knex.schema.createTable('shelf_beer_attribute', function(table){
+      table.increments()
+      table.int('shelf_attribute_type_id')
+      table.int('shelf_beers_id')
+      table.string('value')
+      table.timestamps()
+      table.foreign('shelf_attribute_type_id').references('shelf_attribute_type.id')
       table.foreign('shelf_beers_id').references('shelf_beers.id')
     })
   ])

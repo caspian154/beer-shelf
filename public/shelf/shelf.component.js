@@ -4,8 +4,8 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$window', 'ShelfBeer', 'Beer',
-      function ShelfController(Auth, $window, ShelfBeer, Beer) {
+    controller: ['Auth','$window', 'ShelfBeer', 'Beer', '$filter',
+      function ShelfController(Auth, $window, ShelfBeer, Beer, $filter) {
         self = this
         self.currentUser = Auth.getCurrentUser();
         if (!self.currentUser) {
@@ -40,6 +40,14 @@ angular.
           delete self.newBeerSelection
           self.newBeer = {}
         }
+        // edit item clicked
+        self.openEditBeer = function(beer) {
+          if (beer) {
+            self.newBeerSelection = $filter('filter')(self.beerDb, function (d) {return d.id === beer.id;})[0]
+            self.newBeer = { 'quantity' : beer.quantity, 'vintage' : beer.vintage }
+            $('#modal-add-beer').modal('show')
+          }
+        }
         // update the sort by
         self.sortBy = function(orderBy) {
           self.reverse = (self.orderBy === orderBy) ? !self.reverse : false;
@@ -47,12 +55,12 @@ angular.
         }
         /** End of functions **/
 
-        self.loadBeerDb()
 
         self.query = ''
         self.orderBy = 'name'
         self.reverse = false
         self.shelfBeers = []
+        self.loadBeerDb()
         self.loadShelfBeers()
       }
     ]

@@ -29,6 +29,8 @@
             <th class="clickable" ng-click="$ctrl.sortBy('quantity')">
               Count <i class="fa" ng-class="($ctrl.orderBy !== 'quantity') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
+            <th>
+            </th>
           </tr>
         </thead>
         <tr ng-repeat="shelfBeer in $ctrl.shelfBeers | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
@@ -37,6 +39,7 @@
           <td>{{shelfBeer.beer.style}}</td>
           <td>{{shelfBeer.beer.abv}}</td>
           <td>{{shelfBeer.quantity}}</td>
+          <td><i class="fa fa-pencil clickable" aria-hidden="true" ng-click="$ctrl.openEditBeer(shelfBeer)"></i></td>
         </tr>
       </table>
 
