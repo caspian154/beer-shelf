@@ -29,7 +29,14 @@ angular.
           if (self.newBeer) {
             self.newBeer.user_id = self.currentUser.id
             self.newBeer.beer_id = self.newBeerSelection.id
-            ShelfBeer.create(self.newBeer, function() {}, function() {})
+
+            // if this beer already has an id, we're updating not creating
+            if (self.newBeer.id) {
+              ShelfBeer.update(self.newBeer, function() {}, function() {})
+            }
+            else {
+              ShelfBeer.create(self.newBeer, function() {}, function() {})
+            }
 
             self.loadShelfBeers()
             $('#modal-add-beer').modal('hide')
@@ -37,14 +44,15 @@ angular.
         }
         // button clicked to open the add brewery window
         self.openAddBeer = function() {
+          self.editingBeer = false
           delete self.newBeerSelection
           self.newBeer = {}
         }
         // edit item clicked
-        self.openEditBeer = function(beer) {
-          if (beer) {
-            self.newBeerSelection = $filter('filter')(self.beerDb, function (d) {return d.id === beer.id;})[0]
-            self.newBeer = { 'quantity' : beer.quantity, 'vintage' : beer.vintage }
+        self.openEditBeer = function(shelfBeer) {
+          if (shelfBeer) {
+            self.newBeerSelection = $filter('filter')(self.beerDb, function (d) {return d.id === shelfBeer.beer.id;})[0]
+            self.newBeer = { 'id' : shelfBeer.id, 'quantity' : shelfBeer.quantity, 'vintage' : shelfBeer.vintage }
             $('#modal-add-beer').modal('show')
           }
         }
@@ -54,7 +62,6 @@ angular.
           self.orderBy = orderBy;
         }
         /** End of functions **/
-
 
         self.query = ''
         self.orderBy = 'name'

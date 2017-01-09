@@ -54,5 +54,30 @@ router.route('/shelf-beers')
       res.status(500).json({error: true, data: {message: err.message}})
     })
   })
+  .put(function (req, res) {
+    console.log('trying to edit beer: ' + req.body.id)
+    ShelfBeer.forge({id: req.body.id})
+    .fetch({require: true})
+    .then(function (shelfBeer) {
+      shelfBeer.save({
+        id: req.body.id,
+        beer_id: req.body.beer_id,
+        quantity: req.body.quantity,
+        size: req.body.size,
+        vintage: req.body.vintage
+      })
+      .then(function () {
+        res.json({error: false, data: {id: shelfBeer.get('id')}})
+      })
+      .catch(function (err) {
+        console.error('something went wrong ' + err)
+        res.status(500).json({error: true, data: {message: err.message}})
+      });
+    })
+    .catch(function (err) {
+      console.error('something went wrong ' + err)
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
 
 module.exports = router;
