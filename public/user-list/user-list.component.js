@@ -27,7 +27,7 @@ angular.
 
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '#!/logout';
+          $window.location.href = '/logout';
         }
 
         this.loadUsers();

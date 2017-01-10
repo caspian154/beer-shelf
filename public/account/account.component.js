@@ -29,7 +29,7 @@ angular.
             self.currentUser = userObject
             self.success = true
             Auth.updateUser(function (){
-              $window.location.href = '#!/';
+              $window.location.href = '/';
             }, function() {
 
             });
@@ -40,7 +40,7 @@ angular.
 
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '#!/logout';
+          $window.location.href = '/logout';
         }
       }
     ]

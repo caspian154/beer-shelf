@@ -7,14 +7,17 @@ angular.
     controller: ['Auth', '$window',
       function LoginController(Auth, $window) {
         var self = this;
+        if (self.currentUser) {
+          $window.location.href = '/shelf';
+        }
 
         function loginSuccess(response) {
           var user = Auth.getCurrentUser()
           if (user.reset_password_flag) {
-            $window.location.href = '#!/account'
+            $window.location.href = '/account'
           }
           else {
-            $window.location.href = '#!/shelf';
+            $window.location.href = '/shelf';
           }
         }
 
@@ -23,7 +26,7 @@ angular.
             self.error = response.message
           }
           else {
-            self.error = "Invalid credentials"; 
+            self.error = "Invalid credentials";
           }
         }
 

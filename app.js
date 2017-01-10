@@ -24,5 +24,3 @@ app.use('/styles',  express.static(__dirname + '/styles'));
 
 // import the routes
 app.use(require('./controllers'))
-
-app.use('/api', router);

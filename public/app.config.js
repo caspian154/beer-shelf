@@ -4,7 +4,7 @@ angular.
   module('beerShelfApp').
   config(['$locationProvider', '$routeProvider',
     function config($locationProvider, $routeProvider) {
-      $locationProvider.hashPrefix('!');
+      $locationProvider.html5Mode(true);
 
       $routeProvider
         .when('/login', {
@@ -15,7 +15,7 @@ angular.
           controller: ['Auth', '$window',
             function LogoutController(Auth, $window) {
               Auth.logout();
-              $window.location.href = '#!/login';
+              $window.location.href = '/login';
             }
           ]
         })
@@ -37,6 +37,6 @@ angular.
         .when('/settings/:setting?', {
           template: '<main-header></main-header><settings></settings>'
         })
-        .otherwise('/shelf');
+        .otherwise('/login');
     }
   ]);

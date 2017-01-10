@@ -8,7 +8,7 @@ angular.
       function ReviewsController(Auth, $window) {
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '#!/logout';
+          $window.location.href = '/logout';
         }
 
       }

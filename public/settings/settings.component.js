@@ -9,7 +9,7 @@ angular.
         self = this
         self.currentUser = Auth.getCurrentUser()
         if (!self.currentUser) {
-          $window.location.href = '#!/logout';
+          $window.location.href = '/logout';
         }
 
         /** Functions **/
