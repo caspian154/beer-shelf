@@ -19,10 +19,16 @@ angular.
             self.shelfBeers = response
           })
         }
+        // load the database of beers.
         self.loadBeerDb = function() {
           Beer.getAutocomplete(function(response) {
             self.beerDb = response
           })
+        }
+        // callback for closing the edit beer window
+        self.closeAddBeerModal = function() {
+          self.loadShelfBeers()
+          $('#modal-add-beer').modal('hide')
         }
         // add this beer to the shelf
         self.addBeerToShelf = function() {
@@ -32,14 +38,11 @@ angular.
 
             // if this beer already has an id, we're updating not creating
             if (self.newBeer.id) {
-              ShelfBeer.update(self.newBeer, function() {}, function() {})
+              ShelfBeer.update(self.newBeer, self.closeAddBeerModal, function() {})
             }
             else {
-              ShelfBeer.create(self.newBeer, function() {}, function() {})
+              ShelfBeer.create(self.newBeer, self.closeAddBeerModal, function() {})
             }
-
-            self.loadShelfBeers()
-            $('#modal-add-beer').modal('hide')
           }
         }
         // button clicked to open the add brewery window
