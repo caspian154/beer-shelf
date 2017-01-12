@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 
 var Beer = require('../models/beer')
-var Beers = require('../models/beers')
 var Parser = require('./external-lookup/BeerAdvocateParser')
 
 router.route('/beers/:beer_id')
@@ -28,8 +27,7 @@ router.route('/beers/:beer_id')
 router.route('/beers-autocomplete')
   // fetch all users
   .get(function (req, res) {
-    Beers.forge()
-    .fetch({
+    Beer.fetchAll({
       withRelated: [{ brewery: function (b) { b.column('id', 'name') }}],
       columns: ['id', 'name', 'brewery_id']})
     .then(function (collection) {
@@ -43,8 +41,7 @@ router.route('/beers-autocomplete')
 router.route('/beers')
   // fetch all users
   .get(function (req, res) {
-    Beers.forge()
-    .fetch({withRelated: ['brewery']})
+    Beer.fetchAll({withRelated: ['brewery']})
     .then(function (collection) {
       res.json(collection.toJSON());
     })

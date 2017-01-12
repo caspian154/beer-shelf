@@ -5,7 +5,6 @@ var router = express.Router();
 
 var Beer = require('../models/beer')
 var ShelfBeer = require('../models/shelfBeer')
-var ShelfBeers = require('../models/shelfBeers')
 var Parser = require('./external-lookup/BeerAdvocateParser')
 
 router.route('/shelf-beers/:user_id')

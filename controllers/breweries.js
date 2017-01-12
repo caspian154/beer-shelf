@@ -5,7 +5,6 @@ var router = express.Router();
 
 var Beer = require('../models/beer')
 var Brewery = require('../models/brewery')
-var Breweries = require('../models/breweries')
 var Parser = require('./external-lookup/BeerAdvocateParser')
 
 router.route('/breweries/:brewery_id')
@@ -27,8 +26,7 @@ router.route('/breweries/:brewery_id')
 router.route('/breweries')
   // fetch all users
   .get(function (req, res) {
-    Breweries.forge()
-    .fetch()
+    Brewery.fetchAll()
     .then(function (collection) {
       res.json(collection.toJSON());
     })

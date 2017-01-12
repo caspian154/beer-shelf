@@ -78,8 +78,12 @@
             <input id="txt-vintage" ng-model="$ctrl.newBeer.vintage" class="form-control">
           </div>
 
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Add Beer</button>
+          <div class="form-group" ng-repeat="beerAttribute in $ctrl.newBeer.shelf-beer-attributes | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
+            <label for"txt-vintage left-pad-control">Vintage</label>
+            <input id="txt-vintage" ng-model="$ctrl.newBeer.vintage" class="form-control">
+          </div>
 
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
           <br />
           <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
       		{{$ctrl.error}}

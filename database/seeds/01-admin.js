@@ -26,6 +26,9 @@ exports.seed = function(knex, Promise) {
           name: 'number'}),
         knex('attribute_data_type').insert({
           id: 3,
+          name: 'money'}),
+        knex('attribute_data_type').insert({
+          id: 4,
           name: 'date'})
       ]);
     });

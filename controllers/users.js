@@ -2,9 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-
 var User = require('../models/user')
-var Users = require('../models/users')
 
 router.route('/users/:user_id')
   .get(function (req, res) {
@@ -48,8 +46,7 @@ router.route('/users/:user_id')
 router.route('/users')
   // fetch all users
   .get(function (req, res) {
-    Users.forge()
-    .fetch({
+    User.fetchAll({
       columns: ['id', 'email', 'name', 'reset_password_flag', 'role_id']
     })
     .then(function (collection) {
