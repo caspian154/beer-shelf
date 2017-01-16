@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       table.string('email');
       table.string('name');
       table.string('password');
-      table.int('role_id');
+      table.integer('role_id');
       table.boolean('reset_password_flag')
       table.timestamps();
       table.foreign('role_id').references('roles.id')
@@ -27,17 +27,17 @@ exports.up = function(knex, Promise) {
       table.string('name');
       table.string('style');
       table.double('abv');
-      table.int('brewery_id');
+      table.integer('brewery_id');
       table.string('beer_advocate_id');
       table.timestamps();
       table.foreign('brewery_id').references('breweries.id')
     }),
     knex.schema.createTable('shelf_beers', function(table){
       table.increments();
-      table.int('user_id');
-      table.int('beer_id');
-      table.int('quantity');
-      table.int('size');
+      table.integer('user_id');
+      table.integer('beer_id');
+      table.integer('quantity');
+      table.integer('size');
       table.date('vintage');
       table.timestamps();
       table.foreign('user_id').references('users.id')
@@ -51,14 +51,15 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('shelf_attribute_type', function(table){
       table.increments()
       table.string('name')
-      table.int('attribute_data_type_id')
+      table.integer('attribute_data_type_id')
+      table.boolean('isPublic')
       table.timestamps()
       table.foreign('attribute_data_type_id').references('attribute_data_type.id')
     }),
     knex.schema.createTable('shelf_beer_attribute', function(table){
       table.increments()
-      table.int('shelf_attribute_type_id')
-      table.int('shelf_beers_id')
+      table.integer('shelf_attribute_type_id')
+      table.integer('shelf_beers_id')
       table.string('value')
       table.timestamps()
       table.foreign('shelf_attribute_type_id').references('shelf_attribute_type.id')

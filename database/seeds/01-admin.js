@@ -29,7 +29,12 @@ exports.seed = function(knex, Promise) {
           name: 'money'}),
         knex('attribute_data_type').insert({
           id: 4,
-          name: 'date'})
+          name: 'date'}),
+        knex('shelf_attribute_type').insert({
+          id: 0,
+          attribute_data_type_id: 1,
+          isPublic: false,
+          name: 'Location'})
       ]);
     });
 };

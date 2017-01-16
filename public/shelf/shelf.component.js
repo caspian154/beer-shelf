@@ -55,7 +55,12 @@ angular.
         self.openEditBeer = function(shelfBeer) {
           if (shelfBeer) {
             self.newBeerSelection = $filter('filter')(self.beerDb, function (d) {return d.id === shelfBeer.beer.id;})[0]
-            self.newBeer = { 'id' : shelfBeer.id, 'quantity' : shelfBeer.quantity, 'vintage' : shelfBeer.vintage }
+            self.newBeer = { 
+              'id' : shelfBeer.id, 
+              'quantity' : shelfBeer.quantity, 
+              'vintage' : shelfBeer.vintage,
+              'beerAttributes' : shelfBeer.beerAttributes
+            }
             $('#modal-add-beer').modal('show')
           }
         }

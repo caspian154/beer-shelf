@@ -3,6 +3,7 @@
 let bookshelf = require('../database');
 let User = require('./user');
 let Beer = require('./beer');
+let ShelfBeerAttribute = require('./shelfBeerAttribute')
 
 var ShelfBeer = bookshelf.Model.extend({
   tableName: 'shelf_beers',
@@ -12,6 +13,9 @@ var ShelfBeer = bookshelf.Model.extend({
   },
   beer: function() {
     return this.belongsTo(Beer)
+  }
+  , beerAttributes: function() {
+    return this.hasMany(ShelfBeerAttribute, 'shelf_beers_id')
   }
 });
 
