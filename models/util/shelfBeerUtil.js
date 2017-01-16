@@ -30,19 +30,27 @@ exports.saveShelfBeerOnly = function(newItem) {
 	}
 }
 
-exports.saveAttributes = function(attributes) {
-	var attributeList = []
-	attributes.forEach(function(attribute) {
-		attributeList.push({
-			//id: attribute.id,
-			shelf_attribute_type_id: attribute.shelf_attribute_type_id,
-			shelf_beers_id: attribute.shelf_beers_id, 
-			value: attribute.value
+exports.saveAttributes = function(attributes, shelfBeerId) {
+	return ShelfBeerAttribute
+		.where({shelf_beers_id: shelfBeerId})
+		.fetchAll()
+		.then(function (existingAttributes) {
+			// delete all attributes
+			return existingAttributes.invokeThen('destroy')
 		})
-	})
-	return Promise.all(
-		ShelfBeerAttributes.forge(attributeList)
-		.invokeThen('save'))
+		.then(function () {
+			var attributeList = []
+			attributes.forEach(function(attribute) {
+				attributeList.push({
+					shelf_attribute_type_id: attribute.shelf_attribute_type_id,
+					shelf_beers_id: attribute.shelf_beers_id, 
+					value: attribute.value
+				})
+			})
+			// save all attributes.
+			return ShelfBeerAttributes.forge(attributeList)
+				.invokeThen('save')
+		})
 }
 
 exports.saveShelfBeer = function(newItem) {
@@ -50,24 +58,13 @@ exports.saveShelfBeer = function(newItem) {
 		.then(function (shelfBeer) {
 			var attributes = newItem.beerAttributes
 			if (attributes) {
-				return exports.saveAttributes(attributes)
+				return exports.saveAttributes(attributes, shelfBeer.get('id'))
+					.then(function(attributes) {
+						return shelfBeer
+					})
+			}
+			else {
+				return shelfBeer
 			}
 		})
-    // Promise.all(attributes.invokeThen('save')).then(function() {
-    //   // collection models should now be saved...
-    // });
-    // res.json({error: false, data: {id: shelfBeer.get('id')}})
-
-
-    // ShelfBeer.forge({id: newItem.id})
-    // .fetch({require: true, withRelated: ['beerAttributes']})
-    // .then(function (shelfBeer) {
-    //   shelfBeer.save({
-    //     id: newItem.id,
-    //     beer_id: newItem.beer_id,
-    //     quantity: newItem.quantity,
-    //     size: newItem.size,
-    //     vintage: newItem.vintage
-    //   })
-    //   .then(function (sb) {
 }

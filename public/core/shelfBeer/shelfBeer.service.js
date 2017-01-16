@@ -10,6 +10,13 @@ angular.
             if (error) error(response)
           })
         },
+        getAttributeTypes: function (success, error) {
+          $http.get('/api/shelf-attribute-types').success(function(response) {
+            if (success) success(response)
+          }).error(function(response) {
+            if (error) error(response)
+          })
+        },
         create: function (beer, success, error) {
           $http.post('/api/shelf-beers', beer).success(function(response) {
             if (success) {

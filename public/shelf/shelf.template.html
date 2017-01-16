@@ -78,13 +78,31 @@
             <input id="txt-vintage" ng-model="$ctrl.newBeer.vintage" class="form-control">
           </div>
 
+          <!--The optional attributes for this beer-->
           <div class="form-group" ng-repeat="beerAttribute in $ctrl.newBeer.beerAttributes">
             <label class="left-pad-control">{{beerAttribute.attributeType.name}}</label>
-            <input ng-model="beerAttribute.value" class="form-control">
+            <div class="input-group">
+              <input ng-model="beerAttribute.value" class="form-control">
+              <a href="#" class="input-group-addon" ng-click="$ctrl.removeShelfBeerAttribute(beerAttribute)"><i class="fa fa-minus" aria-hidden="true"></i></a>
+            </div>
           </div>
 
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+          <div class="dropdown">
+            <a class="btn btn-primary dropdown-toggle" href="#" data-toggle="dropdown">Add Attribute <i class="fa fa-caret-down"></i>
+              <span class="" title="Toggle dropdown menu"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="attributeType in $ctrl.getAttributeTypes()">
+                <a href="#" ng-click="$ctrl.addShelfBeerAttribute(attributeType)">{{attributeType.name}}</a>
+              </li>
+              <li class="divider" ng-hide='$ctrl.getAttributeTypes().length == 0'></li>
+              <li><a href="#">Create New</a></li>
+            </ul>
+          </div>
           <br />
+          <br />
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
           <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
       		{{$ctrl.error}}
       		</div>

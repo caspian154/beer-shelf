@@ -25,6 +25,16 @@ angular.
             self.beerDb = response
           })
         }
+        // load all the attribute types 
+        self.loadAttributeTypes = function () {
+          ShelfBeer.getAttributeTypes(function(response) {
+            self.shelfAttributeTypes = response
+          })
+        }
+        // return a list of available attribute types
+        self.getAttributeTypes = function () {
+          return self.shelfAttributeTypes
+        }
         // callback for closing the edit beer window
         self.closeAddBeerModal = function() {
           self.loadShelfBeers()
@@ -61,7 +71,29 @@ angular.
               'vintage' : shelfBeer.vintage,
               'beerAttributes' : shelfBeer.beerAttributes
             }
+
             $('#modal-add-beer').modal('show')
+          }
+        }
+        // add attribute to the beer being modified
+        self.addShelfBeerAttribute = function(attributeType) {
+          if (self.newBeer) {
+            if (!self.newBeer.beerAttributes) {
+              self.newBeer.beerAttributes = []
+            }
+
+            self.newBeer.beerAttributes.push({
+              shelf_attribute_type_id: attributeType.id,
+              shelf_beers_id: self.newBeer.id,
+              'value': '',
+				      attributeType: attributeType
+            })
+          }
+        }
+        // remove the attribute from this beer
+        self.removeShelfBeerAttribute = function(attribute) {
+          if (self.newBeer && self.newBeer.beerAttributes) {
+            self.newBeer.beerAttributes.pop(attribute)
           }
         }
         // update the sort by
@@ -74,9 +106,9 @@ angular.
         self.query = ''
         self.orderBy = 'name'
         self.reverse = false
-        self.shelfBeers = []
         self.loadBeerDb()
         self.loadShelfBeers()
+        self.loadAttributeTypes()
       }
     ]
   });
