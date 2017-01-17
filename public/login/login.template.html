@@ -1,19 +1,19 @@
 <div class="container">
 
-	<form class="form-signin" ng-submit="$ctrl.login()">
+  <form class="form-signin" ng-submit="$ctrl.login()">
 
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<label for="inputEmail" class="sr-only">Email address</label>
-		<input type="email" ng-model="$ctrl.email" class="form-control" placeholder="Email address" required autofocus>
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" ng-model="$ctrl.email" class="form-control" placeholder="Email address" required autofocus>
 
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" ng-model="$ctrl.password" class="form-control" placeholder="Password" required>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" ng-model="$ctrl.password" class="form-control" placeholder="Password" required>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-		<br />
-		<div class="alert alert-danger fade in" ng-show='$ctrl.error'>
-		{{$ctrl.error}}
-		</div>
-	</form>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <br />
+    <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
+    {{$ctrl.error}}
+    </div>
+  </form>
 
 </div>

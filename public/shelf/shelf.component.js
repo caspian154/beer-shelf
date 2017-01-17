@@ -86,7 +86,7 @@ angular.
               shelf_attribute_type_id: attributeType.id,
               shelf_beers_id: self.newBeer.id,
               'value': '',
-				      attributeType: attributeType
+              attributeType: attributeType
             })
           }
         }
