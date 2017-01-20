@@ -4,8 +4,8 @@ angular.
   module('userList').
   component('userList', {
     templateUrl: 'user-list/user-list.template.html',
-    controller: ['User', 'Auth','$window',
-      function UserListController(User, Auth, $window) {
+    controller: ['User', 'Auth','$location',
+      function UserListController(User, Auth, $location) {
         var self = this;
 
         /** Functions **/
@@ -27,7 +27,7 @@ angular.
 
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '/logout';
+          $location('/logout');
         }
 
         this.loadUsers();

@@ -4,20 +4,20 @@ angular.
   module('login').
   component('login', {
     templateUrl: 'login/login.template.html',
-    controller: ['Auth', '$window',
-      function LoginController(Auth, $window) {
+    controller: ['Auth', '$location',
+      function LoginController(Auth, $location) {
         var self = this;
-        if (self.currentUser) {
-          $window.location.href = '/shelf';
+        if (Auth.getCurrentUser()) {
+          $location.url('/shelf');
         }
 
         function loginSuccess(response) {
           var user = Auth.getCurrentUser()
           if (user.reset_password_flag) {
-            $window.location.href = '/account'
+            $location.url('/account')
           }
           else {
-            $window.location.href = '/shelf';
+            $location.url('/shelf')
           }
         }
 

@@ -1,5 +1,19 @@
 'use strict';
 
+angular.module('beerShelfApp').controller('YourController', ['$scope', 'session', '$location',
+    function($scope, session, $location) {
+
+        $scope.$on('$routeChangeStart', function(angularEvent, newUrl) {
+
+            if (newUrl.requireAuth && !session.user) {
+                // User isn’t authenticated
+                $location.path("/login");
+            }
+
+        });
+    }
+]);
+
 angular.
   module('beerShelfApp').
   config(['$locationProvider', '$routeProvider',
@@ -12,10 +26,10 @@ angular.
         })
         .when('/logout', {
           template: "",
-          controller: ['Auth', '$window',
-            function LogoutController(Auth, $window) {
+          controller: ['Auth', '$location',
+            function LogoutController(Auth, $location) {
               Auth.logout();
-              $window.location.href = '/login';
+              $location.url('/login');
             }
           ]
         })

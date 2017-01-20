@@ -4,12 +4,12 @@ angular.
   module('settings').
   component('settings', {
     templateUrl: 'settings/settings.template.html',
-    controller: ['Auth','$window', '$routeParams', 'Brewery', 'Beer',
-      function SettingsController(Auth, $window, $routeParams, Brewery, Beer) {
+    controller: ['Auth','$location', '$routeParams', 'Brewery', 'Beer',
+      function SettingsController(Auth, $location, $routeParams, Brewery, Beer) {
         self = this
         self.currentUser = Auth.getCurrentUser()
         if (!self.currentUser) {
-          $window.location.href = '/logout';
+          $location.url('/logout');
         }
 
         /** Functions **/

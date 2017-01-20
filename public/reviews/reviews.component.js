@@ -4,11 +4,11 @@ angular.
   module('reviews').
   component('reviews', {
     templateUrl: 'reviews/reviews.template.html',
-    controller: ['Auth','$window',
-      function ReviewsController(Auth, $window) {
+    controller: ['Auth','$location',
+      function ReviewsController(Auth, $location) {
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '/logout';
+          $location.url('/logout');
         }
 
       }

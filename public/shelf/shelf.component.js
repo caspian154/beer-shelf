@@ -4,12 +4,12 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$window', 'ShelfBeer', 'Beer', '$filter',
-      function ShelfController(Auth, $window, ShelfBeer, Beer, $filter) {
+    controller: ['Auth','$location', 'ShelfBeer', 'Beer', '$filter',
+      function ShelfController(Auth, $location, ShelfBeer, Beer, $filter) {
         self = this
         self.currentUser = Auth.getCurrentUser();
         if (!self.currentUser) {
-          $window.location.href = '/logout';
+          $location.url('/logout');
         }
 
         /** Functions **/

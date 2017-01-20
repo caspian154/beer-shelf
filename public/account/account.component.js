@@ -4,8 +4,8 @@ angular.
   module('account').
   component('account', {
     templateUrl: 'account/account.template.html',
-    controller: ['User', 'Auth','$window',
-      function AccountController(User, Auth, $window) {
+    controller: ['User', 'Auth','$location',
+      function AccountController(User, Auth, $location) {
         var self = this;
 
         /** Functions **/
@@ -28,19 +28,17 @@ angular.
           User.update(self.currentUser, function(userObject) {
             self.currentUser = userObject
             self.success = true
+            
             Auth.updateUser(function (){
-              $window.location.href = '/';
-            }, function() {
-
-            });
+              $location.url('/')
+            }, function() {});
           })
         }
-
         /** End of functions **/
-
+        
         this.currentUser = Auth.getCurrentUser();
         if (!this.currentUser) {
-          $window.location.href = '/logout';
+          $location.url('/logout')
         }
       }
     ]
