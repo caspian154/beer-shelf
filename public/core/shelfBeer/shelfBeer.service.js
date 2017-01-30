@@ -10,13 +10,6 @@ angular.
             if (error) error(response)
           })
         },
-        getAttributeTypes: function (success, error) {
-          $http.get('/api/shelf-attribute-types').success(function(response) {
-            if (success) success(response)
-          }).error(function(response) {
-            if (error) error(response)
-          })
-        },
         create: function (beer, success, error) {
           $http.post('/api/shelf-beers', beer).success(function(response) {
             if (success) {
@@ -41,6 +34,26 @@ angular.
               }
             }
             error(response)
+          }).error(function(response) {
+            if (error) error(response)
+          })
+        },
+        getAttributeTypes: function (success, error) {
+          $http.get('/api/shelf-attribute-types').success(function(response) {
+            if (success) success(response)
+          }).error(function(response) {
+            if (error) error(response)
+          })
+        },
+        createAttributeType: function (attributeType, success, error) {
+          $http.post('/api/shelf-attribute-types', attributeType).success(function(response) {
+            if (success) {
+              if (response && response.data && response.data.id) {
+                attributeType.id = response.data.id
+                success(attributeType)
+                return
+              }
+            }
           }).error(function(response) {
             if (error) error(response)
           })

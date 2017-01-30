@@ -31,7 +31,7 @@ router.route('/shelf-beers/:user_id')
   })
 
 router.route('/shelf-attribute-types')
-  // fetch all shelf-beers
+  // fetch all attribute types
   .get(function (req, res) {
     ShelfAttributeType.forge()
     .fetchAll({withRelated: ['dataType']})
@@ -40,6 +40,20 @@ router.route('/shelf-attribute-types')
     })
     .catch(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
+    })
+  })
+  // create a new attribute type
+  .post(function (req, res) {
+    ShelfAttributeType.forge({
+      name: req.body.name,
+      attribute_data_type_id: req.body.attribute_data_type_id
+    })
+    .save()
+    .then(function (attributeType) {
+      res.json({error: false, data: {id: attributeType.get('id')}})
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}})
     })
   })
 

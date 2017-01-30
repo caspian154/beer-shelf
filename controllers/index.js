@@ -9,6 +9,7 @@ router.use('/api', require('./users'));
 router.use('/api', require('./breweries'));
 router.use('/api', require('./beers'));
 router.use('/api', require('./shelfBeers'));
+router.use('/api', require('./dataType'));
 
 // static files
 router.use('/', express.static(__dirname + '/../public', { redirect: false }))

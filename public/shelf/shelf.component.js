@@ -4,8 +4,8 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$location', 'ShelfBeer', 'Beer', '$filter',
-      function ShelfController(Auth, $location, ShelfBeer, Beer, $filter) {
+    controller: ['Auth','$location', 'ShelfBeer', 'Beer', 'DataType', '$filter',
+      function ShelfController(Auth, $location, ShelfBeer, Beer, DataType, $filter) {
         self = this
         self.currentUser = Auth.getCurrentUser();
         if (!self.currentUser) {
@@ -34,6 +34,12 @@ angular.
         // return a list of available attribute types
         self.getAttributeTypes = function () {
           return self.shelfAttributeTypes
+        }
+        // load all the attribute data types 
+        self.loadAttributeDataTypes = function () {
+          DataType.get(function(response) {
+            self.attributeDataTypes = response
+          })
         }
         // callback for closing the edit beer window
         self.closeAddBeerModal = function() {
@@ -64,12 +70,12 @@ angular.
         // edit item clicked
         self.openEditBeer = function(shelfBeer) {
           if (shelfBeer) {
-            self.newBeerSelection = $filter('filter')(self.beerDb, function (d) {return d.id === shelfBeer.beer.id;})[0]
+            self.newBeerSelection = $filter('filter')(self.beerDb, { id: shelfBeer.beer.id })[0]
             self.newBeer = { 
               'id' : shelfBeer.id, 
               'quantity' : shelfBeer.quantity, 
               'vintage' : shelfBeer.vintage,
-              'beerAttributes' : shelfBeer.beerAttributes
+              'beerAttributes' : angular.copy(shelfBeer.beerAttributes)
             }
 
             $('#modal-add-beer').modal('show')
@@ -96,6 +102,24 @@ angular.
             self.newBeer.beerAttributes.pop(attribute)
           }
         }
+        // callback for closing the add Attribute window
+        self.cloaseAddNewAttributeModal = function() {
+          self.loadAttributeTypes()
+          $('#modal-new-attribute').modal('hide')
+        }
+        // add this beer to the shelf
+        self.addNewAttribute = function() {
+          if (self.newAttribute) {
+            ShelfBeer.createAttributeType(
+              self.newAttribute, 
+              self.cloaseAddNewAttributeModal, 
+              function() {})
+          }
+        }
+        // button clicked to open the add brewery window
+        self.openAddNewAttribute = function() {
+          self.newAttribute = {}
+        }
         // update the sort by
         self.sortBy = function(orderBy) {
           self.reverse = (self.orderBy === orderBy) ? !self.reverse : false;
@@ -109,6 +133,7 @@ angular.
         self.loadBeerDb()
         self.loadShelfBeers()
         self.loadAttributeTypes()
+        self.loadAttributeDataTypes()
       }
     ]
   });

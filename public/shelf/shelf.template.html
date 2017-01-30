@@ -58,14 +58,14 @@
         <form ng-submit="$ctrl.addBeerToShelf()">
           <div class="form-group">
             <label for"txt-beer left-pad-control">Beer</label>
-            <!-- <input id="txt-beer" ng-model="$ctrl.newBeer.beer_id" class="form-control"> -->
             <input type="text"
               id="beer-selection"
               ng-model="$ctrl.newBeerSelection"
               uib-typeahead="beer as beer.name for beer in $ctrl.beerDb | filter:$viewValue"
               typeahead-template-url="beer-template.html"
               typeahead-show-hint="true"
-              class="form-control">
+              class="form-control"
+              autocomplete="off">
           </div>
 
           <div class="form-group">
@@ -96,10 +96,41 @@
                 <a href="#" ng-click="$ctrl.addShelfBeerAttribute(attributeType)">{{attributeType.name}}</a>
               </li>
               <li class="divider" ng-hide='$ctrl.getAttributeTypes().length == 0'></li>
-              <li><a href="#">Create New</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#modal-new-attribute" ng-click="$ctrl.openAddNewAttribute()">Create New</a></li>
             </ul>
           </div>
           <br />
+          <br />
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+          <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
+          {{$ctrl.error}}
+          </div>
+        </form>
+      </modal-window>
+     
+      <modal-window
+          modal-id='modal-new-attribute'
+          modal-title='New Attribute'
+          hide-modal-buttons='true'
+          modal-focus="txt-new-attribute-name">
+        <form ng-submit="$ctrl.addNewAttribute()">
+          <div class="form-group">
+            <label for"txt-new-attribute-name" class="left-pad-control">Name</label>
+             <input id="txt-new-attribute-name" ng-model="$ctrl.newAttribute.name" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for"txt-new-attribute-type" class="left-pad-control">Type</label>
+            <input type="text"
+              id="txt-new-attribute-type"
+              ng-model="$ctrl.newAttribute.attribute_data_type_id"
+              uib-typeahead="dt as dt.name for dt in $ctrl.attributeDataTypes | filter:$viewValue"
+              typeahead-min-length="0"
+              typeahead-editable="false"
+              class="form-control"
+              autocomplete="off">
+          </div>
           <br />
 
           <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>

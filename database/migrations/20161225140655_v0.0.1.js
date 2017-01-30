@@ -52,7 +52,6 @@ exports.up = function(knex, Promise) {
       table.increments()
       table.string('name')
       table.integer('attribute_data_type_id')
-      table.boolean('isPublic')
       table.timestamps()
       table.foreign('attribute_data_type_id').references('attribute_data_type.id')
     }),
