@@ -6,7 +6,7 @@ var User = require('../models/user')
 
 router.route('/users/:user_id')
   .get(function (req, res) {
-    User.where('id', req.params.user_id).fetch()
+    User.where('id', req.params.user_id).fetch({withRelated: ['roles', 'roles.role']})
     .then (function (user) {
       if (user) {
         res.json(user.toJSON())
@@ -28,7 +28,7 @@ router.route('/users/:user_id')
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        role_id: req.body.role_id,
+        // TODO: role_id: req.body.role_id,
         reset_password_flag: req.body.reset_password_flag
       })
       .then(function () {
@@ -47,7 +47,10 @@ router.route('/users')
   // fetch all users
   .get(function (req, res) {
     User.fetchAll({
-      columns: ['id', 'email', 'name', 'reset_password_flag', 'role_id']
+      columns: ['id', 'email', 'name', 'reset_password_flag'],
+      withRelated: [{'roles': function(qb) {
+        qb.column('user_id', 'role_id')
+      }}, 'roles.role']
     })
     .then(function (collection) {
       res.json(collection.toJSON());
@@ -62,7 +65,7 @@ router.route('/users')
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      role_id: req.body.role_id,
+      // TODO: role_id: req.body.role_id,
       reset_password_flag: req.body.reset_password_flag
     })
     .save()

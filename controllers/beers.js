@@ -5,6 +5,14 @@ var router = express.Router();
 
 var Beer = require('../models/beer')
 var Parser = require('./external-lookup/BeerAdvocateParser')
+var AuthenticationUtils = require('../models/util/authenticationUtil.js')
+
+// router.use(function timeLog (req, res, next) {
+//   console.log('Time: ', Date.now())
+//   console.log('url: ', req.url)
+
+//   next()
+// })
 
 router.route('/beers/:beer_id')
   .get(function (req, res) {
@@ -39,6 +47,16 @@ router.route('/beers-autocomplete')
   })
 
 router.route('/beers')
+  .all(AuthenticationUtils.validatePermissions)
+  .all(function (req, res, next) {
+    AuthenticationUtils.validatePermissions(req, res, next, [])
+    return res.status(403).send({
+			success: false,
+			message: 'You lose sucka!'
+		})
+    //next()
+    //var roles = AuthenticationUtils.getUserRoles(req)
+  })
   // fetch all users
   .get(function (req, res) {
     Beer.fetchAll({withRelated: ['brewery']})
