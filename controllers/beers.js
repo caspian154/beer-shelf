@@ -5,32 +5,23 @@ var router = express.Router();
 
 var Beer = require('../models/beer')
 var Parser = require('./external-lookup/BeerAdvocateParser')
-var AuthenticationUtils = require('../models/util/authenticationUtil.js')
-
-// router.use(function timeLog (req, res, next) {
-//   console.log('Time: ', Date.now())
-//   console.log('url: ', req.url)
-
-//   next()
-// })
+var AuthenticationUtil = require('../models/util/authenticationUtil.js')
 
 router.route('/beers/:beer_id')
   .get(function (req, res) {
     Beer.where('id', req.params.beer_id)
     .fetch({withRelated: ['brewery']})
-    .then (function (beer) {
+    .then(function (beer) {
       if (beer) {
         res.json(beer.toJSON())
-      }
-      else {
-        res.status(500).json({error: true, data: {message: 'Unabled to find beer'}});
+      } else {
+        res.status(500).json({error: true, data: {message: 'Unabled to find beer'}})
       }
     })
     .catch(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     })
   })
-
 
 router.route('/beers-autocomplete')
   // fetch all users
@@ -47,15 +38,8 @@ router.route('/beers-autocomplete')
   })
 
 router.route('/beers')
-  .all(AuthenticationUtils.validatePermissions)
   .all(function (req, res, next) {
-    AuthenticationUtils.validatePermissions(req, res, next, [])
-    return res.status(403).send({
-			success: false,
-			message: 'You lose sucka!'
-		})
-    //next()
-    //var roles = AuthenticationUtils.getUserRoles(req)
+    AuthenticationUtil.validatePermissions(req, res, next)
   })
   // fetch all users
   .get(function (req, res) {

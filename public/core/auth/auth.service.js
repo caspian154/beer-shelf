@@ -29,7 +29,7 @@ angular.
         var user
         if (typeof token !== 'undefined') {
           var encoded = token.split('.')[1];
-          user = JSON.parse(urlBase64Decode(encoded)).attributes;
+          user = JSON.parse(urlBase64Decode(encoded))
         }
         return user;
       }
