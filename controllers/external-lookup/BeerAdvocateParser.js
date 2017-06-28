@@ -5,32 +5,32 @@ var cheerio = require('cheerio')
 var S = require('string')
 
 /** Parse the page returned from BA **/
-function parseBreweryHtml(html, searchText) {
+function parseBreweryHtml (html, searchText) {
   var $ = cheerio.load(html)
-  var results = [];
+  var results = []
 
-  $('a').each(function(i, elem) {
-    var link = $(elem);
-    if (link.attr('href') && S(link.attr('href')).startsWith('/beer/profile') ) {
+  $('a').each(function (i, elem) {
+    var link = $(elem)
+    if (link.attr('href') && S(link.attr('href')).startsWith('/beer/profile')) {
       var name = S($(link.html()).html()).decodeHTMLEntities().s
       var id = link.attr('href')
       id = S(id).chompLeft('/beer/profile/').chompRight('/').s
       results.push({beer_advocate_id: id, name: name})
     }
-  });
+  })
 
-  return results;
+  return results
 }
 
-function parseBeerHtml(html, breweryId) {
+function parseBeerHtml (html, breweryId) {
   var $ = cheerio.load(html)
-  var results = [];
+  var results = []
 
   console.log('parsing the html')
 
-  $('tr').each(function(i, elem) {
+  $('tr').each(function (i, elem) {
     var cells = $(elem).find('td.hr_bottom_light')
-    if (cells && cells.length == 6) {
+    if (cells && cells.length > 2) {
       var beer = {}
 
       // get the beer name
@@ -45,10 +45,12 @@ function parseBeerHtml(html, breweryId) {
       beer.brewery_id = breweryId
 
       results.push(beer)
+    } else {
+      console.log('not a beer...')
     }
-  });
+  })
 
-  return results;
+  return results
 }
 
 /** Function to lookup breweries based on a search string **/
