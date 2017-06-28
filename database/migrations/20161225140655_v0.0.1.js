@@ -2,7 +2,6 @@
 /**
  * Note - if we ever need to update a table with foreign keys, we 
  * essentially need to create a new table and move everything over 
- * 
  */
 
 exports.up = function(knex, Promise) {

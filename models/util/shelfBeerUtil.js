@@ -3,10 +3,10 @@ var ShelfBeer = require('../shelfBeer')
 var ShelfBeerAttribute = require('../shelfBeerAttribute')
 var ShelfBeerAttributes = require('../shelfBeerAttributes')
 
-exports.saveShelfBeerOnly = function(newItem) {
+exports.saveShelfBeerOnly = function (newItem) {
   if (newItem.id && newItem.id > 0) {
-    return ShelfBeer.forge({id: newItem.id})
-      .fetch({require: true, withRelated: ['beerAttributes']})
+    return ShelfBeer.forge({ id: newItem.id })
+      .fetch({ require: true, withRelated: ['beerAttributes'] })
       .then(function (shelfBeer) {
         return shelfBeer.save({
           id: newItem.id,
@@ -30,9 +30,9 @@ exports.saveShelfBeerOnly = function(newItem) {
   }
 }
 
-exports.saveAttributes = function(attributes, shelfBeerId) {
+exports.saveAttributes = function (attributes, shelfBeerId) {
   return ShelfBeerAttribute
-    .where({shelf_beers_id: shelfBeerId})
+    .where({ shelf_beers_id: shelfBeerId })
     .fetchAll()
     .then(function (existingAttributes) {
       // delete all attributes
@@ -40,10 +40,10 @@ exports.saveAttributes = function(attributes, shelfBeerId) {
     })
     .then(function () {
       var attributeList = []
-      attributes.forEach(function(attribute) {
+      attributes.forEach(function (attribute) {
         attributeList.push({
           shelf_attribute_type_id: attribute.shelf_attribute_type_id,
-          shelf_beers_id: attribute.shelf_beers_id, 
+          shelf_beers_id: attribute.shelf_beers_id,
           value: attribute.value
         })
       })
@@ -53,17 +53,16 @@ exports.saveAttributes = function(attributes, shelfBeerId) {
     })
 }
 
-exports.saveShelfBeer = function(newItem) {
+exports.saveShelfBeer = function (newItem) {
   return exports.saveShelfBeerOnly(newItem)
     .then(function (shelfBeer) {
       var attributes = newItem.beerAttributes
       if (attributes) {
         return exports.saveAttributes(attributes, shelfBeer.get('id'))
-          .then(function(attributes) {
+          .then(function (attributes) {
             return shelfBeer
           })
-      }
-      else {
+      } else {
         return shelfBeer
       }
     })

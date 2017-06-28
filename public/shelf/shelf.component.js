@@ -4,9 +4,9 @@ angular.
   module('shelf').
   component('shelf', {
     templateUrl: 'shelf/shelf.template.html',
-    controller: ['Auth','$location', 'ShelfBeer', 'Beer', 'DataType', '$filter',
+    controller: ['Auth', '$location', 'ShelfBeer', 'Beer', 'DataType', '$filter',
       function ShelfController(Auth, $location, ShelfBeer, Beer, DataType, $filter) {
-        self = this
+        var self = this
         self.currentUser = Auth.getCurrentUser();
         if (!self.currentUser) {
           $location.url('/logout');
@@ -14,20 +14,20 @@ angular.
 
         /** Functions **/
         // Load the beers from the database.
-        self.loadShelfBeers = function() {
-          ShelfBeer.get(self.currentUser.id, function(response) {
+        self.loadShelfBeers = function () {
+          ShelfBeer.get(self.currentUser.id, function (response) {
             self.shelfBeers = response
           })
         }
         // load the database of beers.
-        self.loadBeerDb = function() {
-          Beer.getAutocomplete(function(response) {
+        self.loadBeerDb = function () {
+          Beer.getAutocomplete(function (response) {
             self.beerDb = response
           })
         }
         // load all the attribute types 
         self.loadAttributeTypes = function () {
-          ShelfBeer.getAttributeTypes(function(response) {
+          ShelfBeer.getAttributeTypes(function (response) {
             self.shelfAttributeTypes = response
           })
         }
@@ -37,52 +37,56 @@ angular.
         }
         // load all the attribute data types 
         self.loadAttributeDataTypes = function () {
-          DataType.get(function(response) {
+          DataType.get(function (response) {
             self.attributeDataTypes = response
           })
         }
         // callback for closing the edit beer window
-        self.closeAddBeerModal = function() {
+        self.closeAddBeerModal = function () {
           self.loadShelfBeers()
           $('#modal-add-beer').modal('hide')
         }
         // add this beer to the shelf
-        self.addBeerToShelf = function() {
+        self.addBeerToShelf = function () {
           if (self.newBeer) {
             self.newBeer.user_id = self.currentUser.id
             self.newBeer.beer_id = self.newBeerSelection.id
 
             // if this beer already has an id, we're updating not creating
             if (self.newBeer.id) {
-              ShelfBeer.update(self.newBeer, self.closeAddBeerModal, function() {})
+              ShelfBeer.update(self.newBeer, self.closeAddBeerModal, function () { })
             }
             else {
-              ShelfBeer.create(self.newBeer, self.closeAddBeerModal, function() {})
+              ShelfBeer.create(self.newBeer, self.closeAddBeerModal, function () { })
             }
           }
         }
         // button clicked to open the add brewery window
-        self.openAddBeer = function() {
+        self.openAddBeer = function () {
           self.editingBeer = false
           delete self.newBeerSelection
           self.newBeer = {}
         }
         // edit item clicked
-        self.openEditBeer = function(shelfBeer) {
+        self.openEditBeer = function (shelfBeer) {
           if (shelfBeer) {
             self.newBeerSelection = $filter('filter')(self.beerDb, { id: shelfBeer.beer.id })[0]
-            self.newBeer = { 
-              'id' : shelfBeer.id, 
-              'quantity' : shelfBeer.quantity, 
-              'vintage' : shelfBeer.vintage,
-              'beerAttributes' : angular.copy(shelfBeer.beerAttributes)
+            self.newBeer = {
+              'id': shelfBeer.id,
+              'quantity': shelfBeer.quantity,
+              'vintage': shelfBeer.vintage,
+              'beerAttributes': angular.copy(shelfBeer.beerAttributes)
             }
 
             $('#modal-add-beer').modal('show')
           }
         }
+        // delete the item clicked
+        self.deleteBeer = function (shelfBeer) {
+          ShelfBeer.delete(shelfBeer.id, function () { self.loadShelfBeers() })
+        }
         // add attribute to the beer being modified
-        self.addShelfBeerAttribute = function(attributeType) {
+        self.addShelfBeerAttribute = function (attributeType) {
           if (self.newBeer) {
             if (!self.newBeer.beerAttributes) {
               self.newBeer.beerAttributes = []
@@ -97,31 +101,31 @@ angular.
           }
         }
         // remove the attribute from this beer
-        self.removeShelfBeerAttribute = function(attribute) {
+        self.removeShelfBeerAttribute = function (attribute) {
           if (self.newBeer && self.newBeer.beerAttributes) {
             self.newBeer.beerAttributes.pop(attribute)
           }
         }
         // callback for closing the add Attribute window
-        self.cloaseAddNewAttributeModal = function() {
+        self.cloaseAddNewAttributeModal = function () {
           self.loadAttributeTypes()
           $('#modal-new-attribute').modal('hide')
         }
         // add this beer to the shelf
-        self.addNewAttribute = function() {
+        self.addNewAttribute = function () {
           if (self.newAttribute) {
             ShelfBeer.createAttributeType(
-              self.newAttribute, 
-              self.cloaseAddNewAttributeModal, 
-              function() {})
+              self.newAttribute,
+              self.cloaseAddNewAttributeModal,
+              function () { })
           }
         }
         // button clicked to open the add brewery window
-        self.openAddNewAttribute = function() {
+        self.openAddNewAttribute = function () {
           self.newAttribute = {}
         }
         // update the sort by
-        self.sortBy = function(orderBy) {
+        self.sortBy = function (orderBy) {
           self.reverse = (self.orderBy === orderBy) ? !self.reverse : false;
           self.orderBy = orderBy;
         }
@@ -136,4 +140,4 @@ angular.
         self.loadAttributeDataTypes()
       }
     ]
-  });
+  })
