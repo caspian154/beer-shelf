@@ -1,22 +1,19 @@
 <div class="container">
-  <div class="row">
-    <!-- <div class="col-md-2">
-
-    </div> -->
-    <div class="col-md-10">
-      <div class="form-inline">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-user">
+  <div class="row table-filters">
+    <div class="col-md-10 filter-search">
+      <input id="txt-user-search" placeholder="Filter" ng-model="$ctrl.query.name" class="form-control">
+    </div>
+    <div class="col-md-2 filter-buttons">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-user">
           Add User
         </button>
-        <div class="form-group">
-          <label for"txt-user-search">Search:</label>
-          <input id="txt-user-search" ng-model="$ctrl.query.name" class="form-control">
-        </div>
-      </div>
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 content-area" id="shelf-grid">
       <!--Body content-->
-      <div class="users">
-        <table class="table table-striped">
+      <div class="users content-area">
+        <table class="table">
           <thead class="thead-default">
             <tr>
               <th>User Id</th>
@@ -32,32 +29,33 @@
         </table>
       </div>
 
-      <modal-window modal-id='modal-add-user' modal-title='Create a new user' hide-modal-buttons='true'>
-        <form ng-submit="$ctrl.createUser()">
-          <label for="inputEmail">Email address</label>
-          <input type="email" ng-model="$ctrl.newUser.email" class="form-control" placeholder="Email address" required autofocus>
-
-          <label for="inputPassword">Password</label>
-          <input type="password" ng-model="$ctrl.newUser.password" class="form-control" placeholder="Password" required>
-
-          <label for="inputText">Name</label>
-          <input type="text" ng-model="$ctrl.newUser.name" class="form-control" placeholder="Full Name" required>
-
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" ng-model="$ctrl.newUser.reset_password_flag" >
-              Require password reset with login
-            </label>
-          </div>
-
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
-
-          <br />
-          <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
-          {{$ctrl.error}}
-          </div>
-        </form>
-      </modal-window>
     </div>
   </div>
 </div>
+
+<modal-window modal-id='modal-add-user' modal-title='Create a new user' hide-modal-buttons='true'>
+  <form ng-submit="$ctrl.createUser()">
+    <label for="inputEmail">Email address</label>
+    <input type="email" ng-model="$ctrl.newUser.email" class="form-control" placeholder="Email address" required autofocus>
+
+    <label for="inputPassword">Password</label>
+    <input type="password" ng-model="$ctrl.newUser.password" class="form-control" placeholder="Password" required>
+
+    <label for="inputText">Name</label>
+    <input type="text" ng-model="$ctrl.newUser.name" class="form-control" placeholder="Full Name" required>
+
+    <div class="form-check">
+      <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" ng-model="$ctrl.newUser.reset_password_flag" >
+              Require password reset with login
+            </label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+
+    <br />
+    <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
+      {{$ctrl.error}}
+    </div>
+  </form>
+</modal-window>

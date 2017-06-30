@@ -1,6 +1,7 @@
 body {
   padding-top: 70px;
   /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  background-color: #ececec;
 }
 
 h1 {
@@ -44,4 +45,44 @@ h1 {
 .brewery-sub-text {
   font-size: 8pt;
   font-style: italic;
+}
+
+.content-area {
+  background-color: white;
+}
+
+.table-filters {
+  border-bottom-width: 1px;
+  border-bottom-color: #9c9c9c;
+  border-bottom-style: solid;
+}
+
+.table-filters .filter-search {
+  padding: 5px 10px 5px 0px;
+}
+
+.table-filters .filter-buttons {
+  padding: 5px 10px 5px 0px;
+}
+
+.table-filters .filter-buttons button {
+  float: right;
+}
+
+th i.fa-sort, th i.fa-sort-desc, th i.fa-sort-asc  {
+  display: inline;
+  padding-left: 4px;
+}
+
+.table-header-section {
+  padding: 15px 0px;
+}
+
+.table-header-section button, 
+.table-header-section .dropdown {
+  float: right;
+}
+
+.table-header-section button {
+  margin-left: 5px
 }

@@ -1,33 +1,62 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <!--Body content-->
-      <div class="form-inline">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
-          Add Beer
+  <div class="row table-filters">
+    <div class="col-md-10 filter-search">
+      <input id="txt-brewery-search" placeholder="Filter" ng-model="$ctrl.query.beer.name" class="form-control" autofocus>
+    </div>
+    <div class="col-md-2 filter-buttons">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-beer" ng-click="$ctrl.openAddBeer()">
+        Add Beer
+      </button>
+    </div>
+  </div>
+  <div class="row content-area table-header-section">
+    <div class="col-md-8" id="shelf-grid">
+
+    </div>
+    <div class="col-md-4" id="shelf-grid">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="true">
+          Columns
+          <span class="caret"></span>
         </button>
-        <div class="form-group">
-          <label for"txt-brewery-search left-pad-control">Filter:</label>
-          <input id="txt-brewery-search" ng-model="$ctrl.query.beer.name" class="form-control" autofocus>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
       </div>
-      <table class="table table-striped" ng-show='$ctrl.shelfBeers.length > 0'>
+      <button type="button" class="btn btn-secondary">
+        <i class="fa fa-download" aria-hidden="true" ></i> Export 
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <i class="fa fa-upload" aria-hidden="true" ></i> Import 
+      </button>
+    </div>
+  </div>
+  <div class="row content-area">
+    <div class="col-md-12" id="shelf-grid">
+      <table class="table" ng-show='$ctrl.shelfBeers.length > 0'>
         <thead class="thead-default">
           <tr>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.brewery.name')">
-              Brewery <i class="fa" ng-class="($ctrl.orderBy !== 'beer.brewery.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              Brewery<i class="fa" ng-class="($ctrl.orderBy !== 'beer.brewery.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.name')">
-              Beer <i class="fa" ng-class="($ctrl.orderBy !== 'beer.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              Beer<i class="fa" ng-class="($ctrl.orderBy !== 'beer.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.style')">
-              Style <i class="fa" ng-class="($ctrl.orderBy !== 'beer.style') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              Style<i class="fa" ng-class="($ctrl.orderBy !== 'beer.style') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.abv')">
-              ABV <i class="fa" ng-class="($ctrl.orderBy !== 'beer.abv') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              ABV<i class="fa" ng-class="($ctrl.orderBy !== 'beer.abv') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('quantity')">
-              Count <i class="fa" ng-class="($ctrl.orderBy !== 'quantity') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+              Count<i class="fa" ng-class="($ctrl.orderBy !== 'quantity') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th>
             </th>
             <th>
             </th>
@@ -51,31 +80,21 @@
         </a>
       </script>
 
-      <modal-window
-          modal-id='modal-add-beer'
-          modal-title='Add Beer'
-          hide-modal-buttons='true'
-          modal-focus="beer-selection">
+      <modal-window modal-id='modal-add-beer' modal-title='Add Beer' hide-modal-buttons='true' modal-focus="beer-selection">
         <form ng-submit="$ctrl.addBeerToShelf()">
           <div class="form-group">
-            <label for"txt-beer left-pad-control">Beer</label>
-            <input type="text"
-              id="beer-selection"
-              ng-model="$ctrl.newBeerSelection"
-              uib-typeahead="beer as beer.name for beer in $ctrl.beerDb | filter:$viewValue"
-              typeahead-template-url="beer-template.html"
-              typeahead-show-hint="true"
-              class="form-control"
-              autocomplete="off">
+            <label for "txt-beer left-pad-control">Beer</label>
+            <input type="text" id="beer-selection" ng-model="$ctrl.newBeerSelection" uib-typeahead="beer as beer.name for beer in $ctrl.beerDb | filter:$viewValue"
+              typeahead-template-url="beer-template.html" typeahead-show-hint="true" class="form-control" autocomplete="off">
           </div>
 
           <div class="form-group">
-            <label for"txt-quantity left-pad-control">Quantity</label>
+            <label for "txt-quantity left-pad-control">Quantity</label>
             <input id="txt-quantity" ng-model="$ctrl.newBeer.quantity" class="form-control">
           </div>
 
           <div class="form-group">
-            <label for"txt-vintage left-pad-control">Vintage</label>
+            <label for "txt-vintage left-pad-control">Vintage</label>
             <input id="txt-vintage" ng-model="$ctrl.newBeer.vintage" class="form-control">
           </div>
 
@@ -105,38 +124,28 @@
 
           <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
           <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
-          {{$ctrl.error}}
+            {{$ctrl.error}}
           </div>
         </form>
       </modal-window>
-     
-      <modal-window
-          modal-id='modal-new-attribute'
-          modal-title='New Attribute'
-          hide-modal-buttons='true'
-          modal-focus="txt-new-attribute-name">
+
+      <modal-window modal-id='modal-new-attribute' modal-title='New Attribute' hide-modal-buttons='true' modal-focus="txt-new-attribute-name">
         <form ng-submit="$ctrl.addNewAttribute()">
           <div class="form-group">
-            <label for"txt-new-attribute-name" class="left-pad-control">Name</label>
-             <input id="txt-new-attribute-name" ng-model="$ctrl.newAttribute.name" class="form-control">
+            <label for "txt-new-attribute-name" class="left-pad-control">Name</label>
+            <input id="txt-new-attribute-name" ng-model="$ctrl.newAttribute.name" class="form-control">
           </div>
 
           <div class="form-group">
-            <label for"txt-new-attribute-type" class="left-pad-control">Type</label>
-            <input type="text"
-              id="txt-new-attribute-type"
-              ng-model="$ctrl.newAttribute.attribute_data_type_id"
-              uib-typeahead="dt as dt.name for dt in $ctrl.attributeDataTypes | filter:$viewValue"
-              typeahead-min-length="0"
-              typeahead-editable="false"
-              class="form-control"
-              autocomplete="off">
+            <label for "txt-new-attribute-type" class="left-pad-control">Type</label>
+            <input type="text" id="txt-new-attribute-type" ng-model="$ctrl.newAttribute.attribute_data_type_id" uib-typeahead="dt as dt.name for dt in $ctrl.attributeDataTypes | filter:$viewValue"
+              typeahead-min-length="0" typeahead-editable="false" class="form-control" autocomplete="off">
           </div>
           <br />
 
           <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
           <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
-          {{$ctrl.error}}
+            {{$ctrl.error}}
           </div>
         </form>
       </modal-window>
