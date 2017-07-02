@@ -4,11 +4,18 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --color",
+    "serve": "nodemon -e js --ignore public",
+    "start": "npm run build && npm run serve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-ui-bootstrap": "^2.5.0",
     "body-parser": "^1.15.2",
     "bookshelf": "^0.10.2",
     "bootstrap": "^3.3.7",

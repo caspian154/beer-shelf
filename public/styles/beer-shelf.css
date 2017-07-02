@@ -79,7 +79,8 @@ th i.fa-sort, th i.fa-sort-desc, th i.fa-sort-asc  {
 }
 
 .table-header-section button, 
-.table-header-section .dropdown {
+.table-header-section .dropdown, 
+.table-header-section a {
   float: right;
 }
 

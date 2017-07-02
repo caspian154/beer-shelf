@@ -26,6 +26,12 @@ router.route('/shelf-beers/user/:user_id')
         res.status(500).json({ error: true, data: { message: err.message } })
       })
   })
+router.route('/shelf-beers/user/:user_id/export')
+  .get(function (req, res) {
+    res.setHeader('Content-disposition', 'attachment; filename=data.csv')
+    res.set('Content-Type', 'text/csv')
+    res.status(200).send('name,abv,qty\nkbs,12,1')
+  })
 
 router.route('/shelf-attribute-types')
   // fetch all attribute types

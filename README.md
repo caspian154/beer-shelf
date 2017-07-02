@@ -3,13 +3,29 @@ A Beer shelf app for keeping track of the beers in the basement and reviews of w
 ## Steps to run locally
 1. Clone this repository
     * `git clone git@github.com:caspian154/beer-shelf.git`
-2. `cd` into the repository folder.
-3. Download and install [NPM](https://nodejs.org/en/download/)
-4. Install nodemon using `npm install -g nodemon`
-5. Install the remaining dependencies with `npm install`.
-6. Run the app by executing the `nodemon -e js --ignore public` command.
-7. The app will set up a sqlite3 database and seed some initial data.
-    * The database connection settings are in `database/knexfile.js`.
+1. `cd` into the repository folder.
+1. Download and install [NPM](https://nodejs.org/en/download/)
+1. Install Dependencies
+    ~~~
+    npm install -g nodemon
+    npm install -g webpack
+    npm install
+    ~~~
+1. Manage database connection settings in `database/knexfile.js` -- on first run a database will be created and seeded with data if you don't have one.
+    * Default username/password: admin@beershelf.com/admin,
+1. Run the app
+    ~~~
+    # build the angular app
+    npm run build 
+
+    # serve the nodejs and site through express: http://localhost:3000
+    npm run serve
+
+    # build the angular app and then serve it
+    npm run start
+    ~~~
+
+## 
 
 ## Database Migrations
 
