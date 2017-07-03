@@ -78,12 +78,11 @@ th i.fa-sort, th i.fa-sort-desc, th i.fa-sort-asc  {
   padding: 15px 0px;
 }
 
-.table-header-section button, 
-.table-header-section .dropdown, 
-.table-header-section a {
+.table-header-section .btn, 
+.table-header-section .dropdown {
   float: right;
 }
 
-.table-header-section button {
+.table-header-section .btn {
   margin-left: 5px
 }

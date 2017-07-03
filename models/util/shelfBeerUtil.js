@@ -67,3 +67,27 @@ exports.saveShelfBeer = function (newItem) {
       }
     })
 }
+
+exports.convertToCSV = function (shelfBeers) {
+  var beerShelfData = 'brewery,beer,size,quantity,vintage,\n'
+
+  // TODO: add attribute columns and values.
+  try {
+    shelfBeers.forEach(function (shelfBeer) {
+      beerShelfData += prepareCsvField(shelfBeer.related('beer').related('brewery').attributes['name'])
+      beerShelfData += prepareCsvField(shelfBeer.related('beer').attributes['name'])
+      beerShelfData += prepareCsvField(shelfBeer.attributes['size'])
+      beerShelfData += prepareCsvField(shelfBeer.attributes['quantity'])
+      beerShelfData += prepareCsvField(shelfBeer.attributes['vintage'])
+      beerShelfData += '\n'
+    })
+  } catch (e) {
+    console.log(e)
+  }
+  return beerShelfData
+}
+
+function prepareCsvField (fieldValue) {
+  var newValue = (fieldValue === null) ? '' : fieldValue
+  return newValue + ','
+}

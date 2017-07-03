@@ -28,9 +28,23 @@ router.route('/shelf-beers/user/:user_id')
   })
 router.route('/shelf-beers/user/:user_id/export')
   .get(function (req, res) {
-    res.setHeader('Content-disposition', 'attachment; filename=data.csv')
-    res.set('Content-Type', 'text/csv')
-    res.status(200).send('name,abv,qty\nkbs,12,1')
+    ShelfBeer.where('user_id', req.params.user_id)
+      .fetchAll({
+        withRelated: ['beer', 'beer.brewery', 'user',
+          'beerAttributes', 'beerAttributes.attributeType']
+      })
+      .then(function (shelfBeers) {
+        if (shelfBeers) {
+          res.setHeader('Content-disposition', 'attachment; filename=beer-shelf.csv')
+          res.set('Content-Type', 'text/csv')
+          res.status(200).send(ShelfBeerUtil.convertToCSV(shelfBeers))
+        } else {
+          res.status(500).send('Unabled to find beers')
+        }
+      })
+      .catch(function (err) {
+        res.status(500).send(err.message)
+      })
   })
 
 router.route('/shelf-attribute-types')
