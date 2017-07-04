@@ -69,25 +69,66 @@ exports.saveShelfBeer = function (newItem) {
 }
 
 exports.convertToCSV = function (shelfBeers) {
-  var beerShelfData = 'brewery,beer,size,quantity,vintage,\n'
+  var beerShelfHeader = 'brewery,beer,size,quantity,vintage,'
+  var attributeTypes = getAttributeTypes(shelfBeers)
+  beerShelfHeader += attributeTypes.join(',')
+  var beerShelfRows = ''
 
   // TODO: add attribute columns and values.
   try {
     shelfBeers.forEach(function (shelfBeer) {
-      beerShelfData += prepareCsvField(shelfBeer.related('beer').related('brewery').attributes['name'])
-      beerShelfData += prepareCsvField(shelfBeer.related('beer').attributes['name'])
-      beerShelfData += prepareCsvField(shelfBeer.attributes['size'])
-      beerShelfData += prepareCsvField(shelfBeer.attributes['quantity'])
-      beerShelfData += prepareCsvField(shelfBeer.attributes['vintage'])
-      beerShelfData += '\n'
+      beerShelfRows += prepareCsvField(shelfBeer.related('beer').related('brewery').attributes['name'])
+      beerShelfRows += prepareCsvField(shelfBeer.related('beer').attributes['name'])
+      beerShelfRows += prepareCsvField(shelfBeer.attributes['size'])
+      beerShelfRows += prepareCsvField(shelfBeer.attributes['quantity'])
+      beerShelfRows += prepareCsvField(shelfBeer.attributes['vintage'])
+
+      attributeTypes.forEach(function (attributeType) {
+        beerShelfRows += prepareCsvField(getAttributeValue(shelfBeer, attributeType))
+      })
+      beerShelfRows += '\n'
     })
   } catch (e) {
     console.log(e)
   }
-  return beerShelfData
+  return beerShelfHeader + '\n' + beerShelfRows
 }
 
 function prepareCsvField (fieldValue) {
   var newValue = (fieldValue === null) ? '' : fieldValue
   return newValue + ','
+}
+
+function getAttributeTypes (shelfBeers) {
+  var attributeTypes = []
+
+  shelfBeers.forEach(function (shelfBeer) {
+    shelfBeer.related('beerAttributes').forEach(function (attribute) {
+      try {
+        var attributeType = attribute.related('attributeType').attributes['name']
+        if (attributeTypes.indexOf(attributeType) < 0) {
+          attributeTypes.push(attributeType)
+        }
+      } catch (e) {
+        console.error('Something went wrong looking for attributes of a beer shelf: ' + e)
+      }
+    })
+  })
+
+  return attributeTypes
+}
+
+function getAttributeValue (shelfBeer, attributeType) {
+  if (!shelfBeer || !shelfBeer.related('beerAttributes')) {
+    return null
+  }
+
+  var attributeValue = null
+  shelfBeer.related('beerAttributes').forEach(function (attribute) {
+    if (attribute.related('attributeType').attributes['name'] === attributeType) {
+      attributeValue = attribute.attributes['value']
+    }
+  })
+
+  return attributeValue
 }
