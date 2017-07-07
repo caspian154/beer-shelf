@@ -31,7 +31,7 @@
       <a role="button" class="btn btn-default" ng-href="/api/shelf-beers/user/{{$ctrl.currentUser.id}}/export" target="_self">
         <i class="fa fa-download" aria-hidden="true" ></i> Export
       </a>  
-      <button type="button" class="btn btn-default">
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-import">
         <i class="fa fa-upload" aria-hidden="true" ></i> Import 
       </button>
     </div>
@@ -147,6 +147,21 @@
           <div class="alert alert-danger fade in" ng-show='$ctrl.error'>
             {{$ctrl.error}}
           </div>
+        </form>
+      </modal-window>
+
+      <modal-window modal-id='modal-import' modal-title='Import' hide-modal-buttons='true' modal-focus='upl-import-file'>
+        <form id="upload-form" action="{{'/api/shelf-beers/user/' + $ctrl.currentUser.id + '/import'}}" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Upload Data</legend>
+                <div>
+                    <!-- The name here is important, and will be used later to reference the data -->
+                    <input id='upl-import-file' type="file" name="shelfCsvFile" accept="text/cvs">
+                </div>
+                <div>
+                    <input type="submit" value="Submit"/>
+                </div>
+            </fieldset>
         </form>
       </modal-window>
     </div>

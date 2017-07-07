@@ -7,6 +7,12 @@ var ShelfBeer = require('../models/shelfBeer')
 var ShelfAttributeType = require('../models/shelfAttributeType')
 
 var ShelfBeerUtil = require('../models/util/shelfBeerUtil')
+var csv = require('csv-parser')
+var multer = require('multer')
+var streamifier = require('streamifier')
+
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 
 router.route('/shelf-beers/user/:user_id')
   .get(function (req, res) {
@@ -44,6 +50,26 @@ router.route('/shelf-beers/user/:user_id/export')
       })
       .catch(function (err) {
         res.status(500).send(err.message)
+      })
+  })
+
+router.route('/shelf-beers/user/:user_id/import')
+  .post(upload.single('shelfCsvFile'), function (req, res) {
+    streamifier.createReadStream(req.file.buffer)
+      .pipe(csv())
+      .on('data', function (data) {
+        if (!data) {
+          res.status(500).send()
+          return
+        }
+
+        console.log('data: ' + data)
+      })
+      .on('end', function () {
+        res.status(200).send()
+      })
+      .on('error', function (err) {
+        console.error('error: ', err)
       })
   })
 
