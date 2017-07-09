@@ -12,10 +12,10 @@ router.use('/api', require('./shelfBeers'))
 router.use('/api', require('./dataType'))
 
 // static files
-router.use('/', express.static(__dirname + '/../public', { redirect: false }))
+router.use('/', express.static(__dirname + '/../dist', { redirect: false }))
 // required for html5 mode
 router.get('*', function (req, res, next) {
-  res.sendFile(path.resolve('public/index.html'))
+  res.sendFile(path.resolve('dist/index.html'))
 })
 
 module.exports = router

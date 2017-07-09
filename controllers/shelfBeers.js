@@ -55,6 +55,7 @@ router.route('/shelf-beers/user/:user_id/export')
 
 router.route('/shelf-beers/user/:user_id/import')
   .post(upload.single('shelfCsvFile'), function (req, res) {
+    console.log('Uploading file')
     streamifier.createReadStream(req.file.buffer)
       .pipe(csv())
       .on('data', function (data) {

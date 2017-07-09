@@ -1,16 +1,16 @@
 'use strict'
 import angular from 'angular'
 
-angular.
-  module('component.shelf').
-  component('shelf', {
+angular
+  .module('component.shelf')
+  .component('shelf', {
     templateUrl: 'component/shelf/shelf.template.html',
     controller: ['Auth', '$location', 'ShelfBeer', 'Beer', 'DataType', '$filter',
-      function ShelfController(Auth, $location, ShelfBeer, Beer, DataType, $filter) {
+      function (Auth, $location, ShelfBeer, Beer, DataType, $filter) {
         var self = this
-        self.currentUser = Auth.getCurrentUser();
+        self.currentUser = Auth.getCurrentUser()
         if (!self.currentUser) {
-          $location.url('/logout');
+          $location.url('/logout')
         }
 
         /** Functions **/
