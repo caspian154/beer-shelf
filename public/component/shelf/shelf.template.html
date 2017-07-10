@@ -28,18 +28,12 @@
           <li><a href="#">Separated link</a></li>
         </ul>
       </div>
-      <input class='btn btn-default' type="file" nv-file-select="" uploader="uploader" /> 
-      <!--<button type="button" class="btn btn-default" nv-file-select="" uploader="uploader">Select File</button>-->
       <a role="button" class="btn btn-default" ng-href="/api/shelf-beers/user/{{$ctrl.currentUser.id}}/export" target="_self">
         <i class="fa fa-download" aria-hidden="true" ></i> Export
-      </a>  
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-import">
+      </a>
+      <button class="btn btn-default" type="file" ngf-select="$ctrl.uploadImport($file, $invalidFiles)" accept=".csv" ngf-max-size="1MB">
         <i class="fa fa-upload" aria-hidden="true" ></i> Import 
       </button>
-
-      <label class="btn btn-default btn-file">
-          Browse <input type="file" style="display: none;">
-      </label>
     </div>
   </div>
   <div class="row content-area">
@@ -158,20 +152,34 @@
 
       <modal-window modal-id='modal-import' modal-title='Import' hide-modal-buttons='true' modal-focus='upl-import-file'>
         <div>
-        <!--<input class='btn btn-default' type="file" nv-file-select="" uploader="uploader" /> 
-        <button class='btn btn-primary' type='button' ng-click='$ctrl.uploader.uploadItem()'>Submit</button>-->
-        <form id="upload-form" action="{{'/api/shelf-beers/user/' + $ctrl.currentUser.id + '/import'}}" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <legend>Upload Data</legend>
-                <div>
-                    <!-- The name here is important, and will be used later to reference the data -->
-                    <input id='upl-import-file' type="file" name="shelfCsvFile" accept="text/cvs">
-                </div>  
-                <div>
-                    <input type="submit" value="Submit"/>
-                </div>
-            </fieldset>
-        </form>
+          <label>Import data preview</label>
+          <br>
+          <label>TODO:</label>
+          <ul>
+            <li>Set the "visible" columns on the grid</li>
+            <li>Set up the "default" columns to be defined in the database?</li>
+            <li>Set visibility and disabled fields based on logged in user</li>
+            <li>Visibility should have public vs private settings too</li>
+            <li>allow user to set visibility of their shelf and reviews</li>
+          </ul>
+          <table class="table table-bordered">
+            <thead class="">
+              <tr>
+                <th ng-repeat="importHeader in $ctrl.import.headers">
+                  {{importHeader}}
+                </th>
+              </tr>
+            </thead>
+            <tr>
+              <th ng-repeat="importHeader in $ctrl.import.headers">
+                Map to...
+              </th>
+            </tr>
+            <tr ng-repeat="r in $ctrl.import.data">
+              {{r.row}}
+              <td ng-repeat="val in r.row track by $index">{{val}}</td>
+            </tr>
+          </table>
         </div>
       </modal-window>
     </div>

@@ -1,6 +1,7 @@
 'use strict'
 
 var express = require('express')
+var path = require('path')
 var router = express.Router()
 
 var ShelfBeer = require('../models/shelfBeer')
@@ -9,9 +10,26 @@ var ShelfAttributeType = require('../models/shelfAttributeType')
 var ShelfBeerUtil = require('../models/util/shelfBeerUtil')
 var csv = require('csv-parser')
 var multer = require('multer')
-var streamifier = require('streamifier')
 
-var storage = multer.memoryStorage()
+var fs = require('fs')
+
+// var storage = multer.memoryStorage()
+// var upload = multer({ storage: storage })
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    var importPath = path.resolve('imports', req.params.user_id)
+    if (!fs.existsSync(importPath)) {
+      fs.mkdirSync(importPath)
+    }
+    cb(null, importPath)
+  },
+  filename: function (req, file, cb) {
+    console.log(JSON.stringify(file))
+    cb(null, file.originalname.replace('.csv', '-' + Date.now() + '.csv'))
+  }
+})
+
 var upload = multer({ storage: storage })
 
 router.route('/shelf-beers/user/:user_id')
@@ -56,18 +74,38 @@ router.route('/shelf-beers/user/:user_id/export')
 router.route('/shelf-beers/user/:user_id/import')
   .post(upload.single('shelfCsvFile'), function (req, res) {
     console.log('Uploading file')
-    streamifier.createReadStream(req.file.buffer)
+    var headers = []
+    var responseData = []
+    var sent = false
+    // streamifier.createReadStream(req.file.buffer)
+    fs.createReadStream(req.file.path)
       .pipe(csv())
+      .on('headers', function (headerList) {
+        headers = headerList
+      })
       .on('data', function (data) {
         if (!data) {
           res.status(500).send()
           return
         }
 
-        console.log('data: ' + data)
+        // get the data for this row.
+        var rowData = []
+        for (var i = 0; i < headers.length; i++) {
+          rowData.push(data[headers[i]])
+        }
+        responseData.push({ row: rowData })
+        
+        // if we have 4 rows, stop processing and send a response
+        if (responseData.length === 4) {
+          sent = true
+          res.status(200).send({ headers: headers, data: responseData })
+        }
       })
       .on('end', function () {
-        res.status(200).send()
+        if (!sent) {
+          res.status(200).send({ headers: headers, data: responseData })
+        }
       })
       .on('error', function (err) {
         console.error('error: ', err)

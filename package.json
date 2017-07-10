@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress --color",
     "build-watch": "webpack --progress --color --watch",
-    "serve": "nodemon -e js --ignore public --ignore dist --ignore webpack.*",
+    "serve": "nodemon -e js --ignore public --ignore dist --ignore webpack.* --ignore imports",
     "start": "npm run build-watch | npm run serve"
   },
   "author": "",
@@ -29,6 +29,7 @@
     "knex": "^0.12.6",
     "multer": "^1.3.0",
     "mysql": "^2.11.1",
+    "ng-file-upload": "^12.2.13",
     "nodemon": "^1.11.0",
     "sqlite3": "^3.1.8",
     "streamifier": "^0.1.1",

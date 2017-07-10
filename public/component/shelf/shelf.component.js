@@ -5,8 +5,8 @@ angular
   .module('component.shelf')
   .component('shelf', {
     templateUrl: 'component/shelf/shelf.template.html',
-    controller: ['Auth', '$location', 'ShelfBeer', 'Beer', 'DataType', '$filter',
-      function (Auth, $location, ShelfBeer, Beer, DataType, $filter) {
+    controller: ['Auth', '$location', 'ShelfBeer', 'Beer', 'DataType', '$filter', 'Upload', '$timeout',
+      function (Auth, $location, ShelfBeer, Beer, DataType, $filter, Upload, $timeout) {
         var self = this
         self.currentUser = Auth.getCurrentUser()
         if (!self.currentUser) {
@@ -14,6 +14,33 @@ angular
         }
 
         /** Functions **/
+        // handle import click
+        self.uploadImport = function (file, errFiles) {
+          self.import.file = file
+          self.import.errFile = errFiles && errFiles[0]
+          if (file) {
+            file.upload = Upload.upload({
+              url: '/api/shelf-beers/user/' + self.currentUser.id + '/import',
+              data: { shelfCsvFile: file }
+            })
+
+            file.upload.then(function (response) {
+              $timeout(function () {
+                if (response.data && response.data.headers) {
+                  self.import.headers = response.data.headers
+                  self.import.data = response.data.data
+                  $('#modal-import').modal('show')
+                }
+              })
+            }, function (response) {
+              if (response.status > 0) {
+                console.error(response.status + ': ' + response.data)
+              }
+            }, function (evt) {
+              self.import.file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
+            })
+          }
+        }
         // Load the beers from the database.
         self.loadShelfBeers = function () {
           ShelfBeer.get(self.currentUser.id, function (response) {
@@ -135,6 +162,7 @@ angular
         self.query = ''
         self.orderBy = 'name'
         self.reverse = false
+        self.import = {}
         self.loadBeerDb()
         self.loadShelfBeers()
         self.loadAttributeTypes()
