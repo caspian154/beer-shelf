@@ -1,7 +1,7 @@
 'use strict';
 
 let bookshelf = require('../database');
-let Role = require('./Role')
+let Role = require('./role')
 let User = require('./user')
 
 var UserRole = bookshelf.Model.extend({
