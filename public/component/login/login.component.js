@@ -7,6 +7,8 @@ angular.module('component.login').component('login', {
     controller: ['Auth', '$location',
       function LoginController(Auth, $location) {
         var self = this;
+        self.loginSuccess = loginSuccess;
+        self.loginFailure = loginFailure;
         if (Auth.getCurrentUser()) {
           $location.url('/shelf');
         }
@@ -31,7 +33,7 @@ angular.module('component.login').component('login', {
         }
 
         this.login = function () {
-          Auth.login({email: self.email, password: self.password}, loginSuccess, loginFailure);
+          Auth.login({email: self.email, password: self.password}, self.loginSuccess, self.loginFailure);
         }
       }
     ]

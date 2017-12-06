@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.5.8",
-    "angular-resource": "^1.5.8",
-    "angular-route": "^1.5.8",
+    "angular": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-route": "1.5.8",
     "angular-ui-bootstrap": "^2.5.0",
     "body-parser": "^1.15.2",
     "bookshelf": "^0.10.2",

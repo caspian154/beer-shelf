@@ -21,9 +21,7 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
+          <li><a href="#">Feature not Implemented...</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#">Separated link</a></li>
         </ul>
@@ -38,6 +36,15 @@
   </div>
   <div class="row content-area">
     <div class="col-md-12" id="shelf-grid">
+
+      <label>TODO:</label>
+      <ul>
+        <li>Set the "visible" columns on the grid</li>
+        <li>Set up the "default" columns to be defined in the database?</li>
+        <li>Set visibility and disabled fields based on logged in user</li>
+        <li>Visibility should have public vs private settings too</li>
+        <li>allow user to set visibility of their shelf and reviews</li>
+      </ul>
       <table class="table" ng-show='$ctrl.shelfBeers.length > 0'>
         <thead class="thead-default">
           <tr>
@@ -46,6 +53,9 @@
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.name')">
               Beer<i class="fa" ng-class="($ctrl.orderBy !== 'beer.name') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
+            </th>
+            <th class="clickable" ng-click="$ctrl.sortBy('vintage')">
+              Vintage<i class="fa" ng-class="($ctrl.orderBy !== 'vintage') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
             </th>
             <th class="clickable" ng-click="$ctrl.sortBy('beer.style')">
               Style<i class="fa" ng-class="($ctrl.orderBy !== 'beer.style') ? 'fa-sort' : $ctrl.reverse ? 'fa-sort-desc' : 'fa-sort-asc'"></i>
@@ -65,6 +75,7 @@
         <tr ng-repeat="shelfBeer in $ctrl.shelfBeers | filter: $ctrl.query | orderBy:$ctrl.orderBy:$ctrl.reverse">
           <td>{{shelfBeer.beer.brewery.name}}</td>
           <td>{{shelfBeer.beer.name}}</td>
+          <td>{{shelfBeer.vintage}}</td>
           <td>{{shelfBeer.beer.style}}</td>
           <td>{{shelfBeer.beer.abv}}</td>
           <td>{{shelfBeer.quantity}}</td>
@@ -154,14 +165,6 @@
         <div>
           <label>Import data preview</label>
           <br>
-          <label>TODO:</label>
-          <ul>
-            <li>Set the "visible" columns on the grid</li>
-            <li>Set up the "default" columns to be defined in the database?</li>
-            <li>Set visibility and disabled fields based on logged in user</li>
-            <li>Visibility should have public vs private settings too</li>
-            <li>allow user to set visibility of their shelf and reviews</li>
-          </ul>
           <table class="table table-bordered">
             <thead class="">
               <tr>
@@ -171,9 +174,15 @@
               </tr>
             </thead>
             <tr>
-              <th ng-repeat="importHeader in $ctrl.import.headers">
-                Map to...
-              </th>
+              <td ng-repeat="importHeader in $ctrl.import.headers">
+                <div class="btn-group" uib-dropdown>
+                  <button id="btn-import-map-{{importHeader}}" type="button" class="btn btn-secondary" uib-dropdown-toggle>
+                    Map To <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" uib-dropdown-menu template-url="import-map-dropdown" aria-labelledby="button-template-url">
+                  </ul>
+                </div>
+              </td>
             </tr>
             <tr ng-repeat="r in $ctrl.import.data">
               {{r.row}}
@@ -182,6 +191,16 @@
           </table>
         </div>
       </modal-window>
+
+      <script type="text/ng-template" id="import-map-dropdown">
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
+          <li role="menuitem"><a href="#">Action in Template</a></li>
+          <li role="menuitem"><a href="#">Another action in Template</a></li>
+          <li role="menuitem"><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li role="menuitem"><a href="#">Separated link in Template</a></li>
+        </ul>
+      </script>
     </div>
   </div>
 </div>

@@ -38,18 +38,21 @@ angular.module('service.auth', [])
       return {
         // perform the login functionality
         login: function (data, success, error) {
-            $http.post('/api/authenticate', data).success(function (response) {
-              if (response) {
-                if (!response.success && response.message) {
-                  error(response)
+            $http.post('/api/authenticate', data)
+            .then(function (response) {
+              if (response && response.data) {
+                if (!response.data.success && response.data.message) {
+                  error(response.data)
                 }
-                else if (response.success && response.token){
+                else if (response.data.success && response.data.token){
                   $http.defaults.headers.common['X-Access-Token'] = response.token;
-                  window.sessionStorage["userInfo"] = response.token
+                  window.sessionStorage["userInfo"] = response.data.token
                   success();
                 }
               }
-            }).error(error)
+            }, function (response) {
+              error(response.data);
+            });
         }
         // get the current user from the token
         , getCurrentUser: function() {
